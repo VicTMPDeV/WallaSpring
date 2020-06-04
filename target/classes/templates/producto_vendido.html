@@ -29,11 +29,11 @@
 					<br><br>
 					<div class="col-md-12">
 						<div class="panel panel-default panel-producto" style="margin-bottom: 30px">
-							<!-- AVATAR USUARIO -->
+							<!-- AVATAR USUARIO COMPRADOR -->
 							<div class="panel-body text-center">
 								<br>
 								<!-- CONDICIONAL TERNARIO: Si el Atributo Avatar esta Vacio, usamos el Servicio para Avatares de la URL (adorable.io), SI NO, es porque tenemos asignada una URL local (hemos subido nosotros una imagen en el Formulario) y accederemos a ella -->
-								<img th:src="${#strings.isEmpty(producto.propietario.avatar)} ? @{http://api.adorable.io/avatars/140/{email}.png(email=${compra.propietario.email})} : ${compra.propietario.avatar}" 
+								<img th:src="${#strings.isEmpty(compra.comprador.avatar)} ? @{http://api.adorable.io/avatars/140/{email}.png(email=${compra.comprador.email})} : ${compra.comprador.avatar}" 
 								class="img-circle" name="aboutme" width="180" height="180" alt="Avatar de Usuario"/>
 							</div>
 							<br>
@@ -41,14 +41,14 @@
 							<div class="panel-heading" style="background-color: #69b72a; color: white">
 								<b>Comprador :</b>
 								<div class="nombre pull-right">
-									<span th:text="${compra.propietario.nombre + ' ' + compra.propietario.apellidos}"></span>
+									<span th:text="${compra.comprador.nombre + ' ' + compra.comprador.apellidos}"></span>
 								</div>
 							</div>
 							<!-- EMAIL VENDEDOR DEL PRODUCTO -->
 							<div class="panel-heading" style="color: #69b72a">
 								<b>Email :</b>
 								<div class="email pull-right">
-									<span th:text="${compra.propietario.email}"></span>
+									<span th:text="${compra.comprador.email}"></span>
 								</div>
 							</div>
 						</div> 

@@ -109,7 +109,7 @@ public class Producto {
 	 */
 	
 	@ManyToOne
-	private Usuario propietario;	// 1 USUARIO puede tener M PRODUCTOS (M PRODUCTOS tiene 1 USUARIO) <-> 1 PRODUCTO SOLO PERTENECE A 1 USUARIO
+	private Usuario vendedor;	// 1 USUARIO puede tener M PRODUCTOS (M PRODUCTOS tiene 1 USUARIO) <-> 1 PRODUCTO SOLO PERTENECE A 1 USUARIO
 	
 	/**
 	 * ATRIBUTO compra
@@ -141,14 +141,14 @@ public class Producto {
 	 * @param nombre
 	 * @param precio
 	 * @param imagen
-	 * @param usuarioPropietario
+	 * @param usuarioVendedor
 	 */
 
-	public Producto(String nombre, float precio, String imagen, Usuario usuarioPropietario) {
+	public Producto(String nombre, float precio, String imagen, Usuario usuarioVendedor) {
 		this.nombre = nombre;
 		this.precio = precio;
 		this.imagen = imagen;
-		this.propietario = usuarioPropietario; 				//Cada PRODUCTO tiene 1 PROPIETARIO (Que lo VENDE o lo COMPRA)
+		this.vendedor = usuarioVendedor; 					//Cada PRODUCTO tiene 1 Usuario que lo VENDE
 		this.compra = null;									//1 PRODUCTO, en el Instante de su Creación, aun NO HA SIDO COMPRADO o VENDIDO
 	}
 

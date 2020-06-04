@@ -115,7 +115,7 @@ public class CompraController {
 	 * las operaciones) que tiene en Propiedad el Producto.
 	 */
 	
-	private Usuario usuarioPropietario; 
+	private Usuario comprador; 
 
 	/**
 	 * METODO
@@ -210,8 +210,8 @@ public class CompraController {
 	@ModelAttribute("mis_compras")
 	public List<Compra> misCompras() {
 		String email = SecurityContextHolder.getContext().getAuthentication().getName(); 
-		usuarioPropietario = usuarioServicio.buscarPorEMail(email);
-		return compraServicio.buscarTodasPorPropietario(usuarioPropietario);
+		comprador = usuarioServicio.buscarPorEMail(email);
+		return compraServicio.buscarTodasPorPropietario(comprador);
 	}
 
 	/**
@@ -349,7 +349,7 @@ public class CompraController {
 			return "redirect:/public"; 
 		}
 		List<Producto> productosCarrito = productosCarrito(); 
-		Compra miCompra = compraServicio.crearCompra(new Compra(), usuarioPropietario); 
+		Compra miCompra = compraServicio.crearCompra(new Compra(), comprador); 
 		for (Producto producto : productosCarrito) {
 			compraServicio.addProductoCompra(producto, miCompra); 
 		}

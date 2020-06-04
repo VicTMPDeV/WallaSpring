@@ -37,6 +37,6 @@ public interface ICompraRepositoryDAO extends JpaRepository<Compra, Long> {
 	 * @param propietario
 	 * @return
 	 */
-	List<Compra> findByPropietario(Usuario propietario);
+	List<Compra> findByComprador(Usuario comprador);
 
 }

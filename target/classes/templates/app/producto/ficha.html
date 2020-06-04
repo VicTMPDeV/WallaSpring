@@ -45,7 +45,7 @@
 							<label for="precio" class="col-md-2 control-label">Precio &euro;</label>
 							<!-- Otra codificacion de Simbolo del Euro: (€) -->
 							<div class="col-md-9">
-								<input type="number" class="form-control" id="precio" step="0.01" 
+								<input type="number" min="0" class="form-control" id="precio" step="0.01" 
 								th:field="*{precio}" style="margin-left: 30px;" required />
 								<!-- SI HAY ERRORES, ANYADIMOS UN MENSAJE DE TEXTO CON EL MENSAJE DE ERROR CORRESPONDIENTE -->
 								<span id="precio-error" class="help-block" th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}">ERRORES</span>

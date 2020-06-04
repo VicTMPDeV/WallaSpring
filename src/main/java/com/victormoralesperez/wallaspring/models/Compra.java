@@ -75,7 +75,7 @@ public class Compra {
 	/**
 	 * ATRIBUTO propietario
 	 * ---------------------------------------------------------------------------------------
-	 * Atributo usuarioPropietario de la Clase POJO Compra que REPRESENTA 
+	 * Atributo Usuario Comprador de la Clase POJO Compra que REPRESENTA 
 	 * LA RELACION que se establece entre la Entidad Usuario y la Entidad Compra.
 	 * JPA nos permite Mapear los valores sobre asociaciones entre Entidades, para
 	 * ello primero debemos conocer la Multiplicidad de la Relación, que es:
@@ -85,7 +85,7 @@ public class Compra {
 	 */
 	
 	@ManyToOne
-	private Usuario propietario;	//M COMPRAS tiene 1 USUARIO <-> 1 COMPRA Pertenece SOLO A 1 USUARIO
+	private Usuario comprador;	//M COMPRAS tiene 1 USUARIO <-> 1 COMPRA Pertenece SOLO A 1 USUARIO
 
 	
 	/**
@@ -99,11 +99,11 @@ public class Compra {
 	 * ningun momento en esta Clase (Ello implicaria un Alto Acoplamiento, y la violacion
 	 * del principio de INVERSION DE CONTROL e INYECCION DE DEPENDENCIAS)
 	 * 
-	 * @param propietario
+	 * @param comprador
 	 */
 
-	public Compra(Usuario propietario) { 			
-		this.propietario = propietario;
+	public Compra(Usuario comprador) { 			
+		this.comprador = comprador;
 	}
 	
 }

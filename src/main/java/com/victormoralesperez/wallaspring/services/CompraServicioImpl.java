@@ -70,13 +70,13 @@ public class CompraServicioImpl implements ICompraServicio {
 	 * si en el futuro la aplicacion crece y tenemos que implementar algun otro
 	 * rasgo distintivo)
 	 * 
-	 * @param c
+	 * @param compra
 	 * @return
 	 */
 
 	@Override
-	public Compra crearCompra(Compra c) {
-		return repositorio.save(c);
+	public Compra crearCompra(Compra compra) {
+		return repositorio.save(compra);
 	}
 
 	/**
@@ -88,15 +88,15 @@ public class CompraServicioImpl implements ICompraServicio {
 	 * planteado, le asigna un USUARIO Propietario a la COMPRA cuando esta se lleva
 	 * a cabo.
 	 * 
-	 * @param c
-	 * @param u
+	 * @param compra
+	 * @param usuario
 	 * @return
 	 */
 	
 	@Override
-	public Compra crearCompra(Compra c, Usuario u) {
-		c.setPropietario(u);
-		return repositorio.save(c);
+	public Compra crearCompra(Compra compra, Usuario usuario) {
+		compra.setComprador(usuario);
+		return repositorio.save(compra);
 	}
 
 	/**
@@ -109,15 +109,15 @@ public class CompraServicioImpl implements ICompraServicio {
 	 * pertenece. Es por ello que editamos el PRODUCTO para darle un Valor concreto
 	 * a su Atributo COMPRA.
 	 * 
-	 * @param p
-	 * @param c
+	 * @param producto
+	 * @param compra
 	 * @return
 	 */
 	
 	@Override
-	public Producto addProductoCompra(Producto p, Compra c) {
-		p.setCompra(c);
-		return productoServicio.editar(p);
+	public Producto addProductoCompra(Producto producto, Compra compra) {
+		producto.setCompra(compra);
+		return productoServicio.editar(producto);
 	}
 
 	/**
@@ -160,13 +160,13 @@ public class CompraServicioImpl implements ICompraServicio {
 	 * Mapeamos el Metodo que hemos anyadido en el Repositorio para Buscar todas las
 	 * COMPRAS asociadas a un USUARIO.
 	 * 
-	 * @param u
+	 * @param usuario
 	 * @return
 	 */
 	
 	@Override
-	public List<Compra> buscarTodasPorPropietario(Usuario u) {
-		return repositorio.findByPropietario(u);
+	public List<Compra> buscarTodasPorPropietario(Usuario usuario) {
+		return repositorio.findByComprador(usuario);
 	}
 
 }

@@ -209,7 +209,7 @@ public class ProductoController {
 				producto.setImagen(MvcUriComponentsBuilder.fromMethodName(FilesController.class, "serveFile", imagen).build().toUriString());
 			}	
 			//...Exista o no fichero de imagen asociado al Producto, lo insertaremos a continuacion... (Cuidado con poner ELSE que la vas a cagar pero bien... reflexiona acerca de sus consecuencias...)
-			producto.setPropietario(usuarioVendedor); 		// Indicamos el Propietario del Producto a insertar (No se recibe desde el Formulario)
+			producto.setVendedor(usuarioVendedor); 				// Indicamos el Usuario Vendedor del Producto a insertar (No se recibe desde el Formulario)
 			productoServicio.insertar(producto); 				// Finalmente Insertamos
 			return "redirect:/app/misproductos"; 				// Redirige
 		}
@@ -288,9 +288,9 @@ public class ProductoController {
         } else {
             // Buscamos el antiguo producto para sacar los datos (CREAMOS UNA COPIA PARA TRABAJAR CON ELLA)
             Producto p = productoServicio.findById(productoEditado.getId());
-            // Actualizamos el Propietario porque es el único campo 
-            // que no le hemos podido pasar al Formulario
-            productoEditado.setPropietario(p.getPropietario());
+            // Actualizamos el Usuario Vendedor porque es el único campo 
+            // que no le hemos podido pasar al Formulario.
+            productoEditado.setVendedor(p.getVendedor());
             // Si la imagen no se modifica, la reasignamos
             productoEditado.setImagen(p.getImagen());
             // Si me han enviado el fichero con una imagen

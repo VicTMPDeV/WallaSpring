@@ -74,7 +74,7 @@
 				</div>
 			</div>
 			<!-- Recorremos todos los productos: Foreach -->
-			<div class="col-lg-4" th:if="${#authentication.name != producto.propietario.email}" th:each="producto : ${productos}" >
+			<div class="col-lg-4" th:if="${#authentication.name != producto.vendedor.email}" th:each="producto : ${productos}" >
 				<!-- PANEL QUE CONTIENE CADA PRODUCTO -->
 				<div class="panel panel-default panel-producto" style="margin-bottom: 30px">
 					<!-- Enlace a la pagina de descripcion del producto -->
@@ -94,7 +94,7 @@
 								<!-- Precio Formateado por Pais -->
 								<span class="precio" th:text="${#numbers.formatCurrency(producto.precio)}"></span>
 							</div>
-							<!-- Si esta autenticado y su nombre de utenticacion es distinto al email del propietario
+							<!-- Si esta autenticado y su nombre de utenticacion es distinto al email del vendedor
 							del producto, entonces los anyadimos, es decir, el producto no me pertenece -->
 							<div class="col-md-6">
 								<a th:href="@{/app/carrito/add/{id}(id=${producto.id})}" class="pull-right btn btn-success btn-product">

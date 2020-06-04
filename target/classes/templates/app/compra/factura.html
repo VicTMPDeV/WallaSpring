@@ -32,7 +32,7 @@
 									<td>
 										<strong>Comprador: </strong>
 										<span
-											th:text="${compra.propietario.nombre + ' ' + compra.propietario.apellidos}"></span>
+											th:text="${compra.comprador.nombre + ' ' + compra.comprador.apellidos}"></span>
 									</td>
 								</tr>
 								<tr>
@@ -105,8 +105,8 @@
 								<tbody>									
 									<tr th:each="producto : ${productos}">
 										<td><span th:text="${producto.nombre}">Producto</span></td>
-										<td><span class="text-center pull-center" th:text="${producto.propietario.nombre + ' ' + producto.propietario.apellidos}">Nombre</span></td>
-										<td><span class="text-center pull-right" th:text="${producto.propietario.email}">Email</span></td>
+										<td><span class="text-center pull-center" th:text="${producto.vendedor.nombre + ' ' + producto.vendedor.apellidos}">Nombre</span></td>
+										<td><span class="text-center pull-right" th:text="${producto.vendedor.email}">Email</span></td>
 									</tr>
 								</tbody>
 							</table>

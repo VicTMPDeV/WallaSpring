@@ -41,7 +41,7 @@ public interface IProductoRepositoryDAO extends JpaRepository<Producto, Long> {
 	 * @return List de PRODUCTOS
 	 */
 	
-	List<Producto> findByPropietario(Usuario usuarioPropietario);
+	List<Producto> findByVendedor(Usuario usuarioVendedor);
 
 	/**
 	 * METODO
@@ -92,6 +92,6 @@ public interface IProductoRepositoryDAO extends JpaRepository<Producto, Long> {
 	 * @return
 	 */
 	
-	List<Producto> findByNombreContainsIgnoreCaseAndPropietario(String nombre, Usuario propietario);
+	List<Producto> findByNombreContainsIgnoreCaseAndVendedor(String nombre, Usuario vendedor);
 
 }

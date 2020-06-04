@@ -17,8 +17,8 @@
 						<!-- Colocamos el percio formateado por pais -->
 						<span class="precio" th:text="${#numbers.formatCurrency(producto.precio)}"></span>
 					</div>
-					<!-- Si esta autenticado y su nombre de utenticacion es distinto al email del propietario del producto, entonces los anyadimos, es decir, el producto no me pertenece -->
-					<div class="col-md-6" sec:authorize="isAuthenticated()" th:if="${#authentication.name != producto.propietario.email}">
+					<!-- Si esta autenticado y su nombre de utenticacion es distinto al email del vendedor del producto, entonces los anyadimos, es decir, el producto no me pertenece -->
+					<div class="col-md-6" sec:authorize="isAuthenticated()" th:if="${#authentication.name != producto.vendedor.email}">
 						<a th:href="@{/app/carrito/add/{id}(id=${producto.id})}" class="pull-right btn btn-success btn-product">
 							<span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;&nbsp;&nbsp;COMPRAR
 						</a>

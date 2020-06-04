@@ -38,23 +38,23 @@
 			<!-- VENTAS ACUMULADAS -->
 			<div class="panel-heading" style="color: #69b72a"><b>Ventas :</b>
 				<div class="email pull-right" >
-					+ <span th:text="${#numbers.formatCurrency(misventas)}"></span>
+					<span th:text="${#numbers.formatCurrency(misventas)}"></span>
 				</div>
 			</div>
 			<!-- COMPRAS ACUMULADAS -->
 			<div class="panel-heading" style="color: red"><b>Compras :</b>
 				<div class="email pull-right" >
-					- <span th:text="${#numbers.formatCurrency(miscompras)}"></span>
+					-<span th:text="${#numbers.formatCurrency(miscompras)}"></span>
 				</div>
 			</div>
 			<!-- BALANCE -->
 			<div class="panel-heading" style="color: #69b72a"><b>BALANCE :</b>
 				<div class="email pull-right" th:with="result=${misventas}-${miscompras}">
 					<div th:if="${result >= 0}">
-						+ <span th:text="${#numbers.formatCurrency(result)}"  style="color: #69b72a"></span>
+						<span th:text="${#numbers.formatCurrency(result)}"  style="color: #69b72a"></span>
 					</div>
 					<div th:if="${result < 0}">
-						- <span th:text="${#numbers.formatCurrency(result)}"  style="color: red"></span>
+						<span th:text="${#numbers.formatCurrency(result)}"  style="color: red"></span>
 					</div>
 				</div>
 			</div>

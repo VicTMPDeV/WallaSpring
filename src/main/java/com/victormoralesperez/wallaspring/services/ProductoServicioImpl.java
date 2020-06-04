@@ -143,13 +143,13 @@ public class ProductoServicioImpl implements IProductoServicio{
 	 * -------------------------------------------------------------------------------------------
 	 * Mapeamos el Metodo que hemos anyadido en el Repositorio para
 	 * Buscar todos los PRODUCTOS asociados a un USUARIO.
-	 * @param u
+	 * @param vendedor
 	 * @return
 	 */
 	
 	@Override
-	public List<Producto> productosDeUnPropietario(Usuario u){
-		return repositorio.findByPropietario(u);
+	public List<Producto> productosDeUnPropietario(Usuario vendedor){
+		return repositorio.findByVendedor(vendedor);
 	}
 	
 	/**
@@ -159,13 +159,13 @@ public class ProductoServicioImpl implements IProductoServicio{
 	 * Buscar todos los PRODUCTOS asociados a un USUARIO, filtrando por el 
 	 * Nombre del PRODUCTO y el USUARIO que lo posee (lo haya registrado en 
 	 * la plataforma para venderlo o lo haya adquirido despues de Comprarlo)
-	 * @param u
+	 * @param vendedor
 	 * @return
 	 */
 	
 	@Override
-	public List<Producto> buscarMisProductos(String query, Usuario u){
-		return repositorio.findByNombreContainsIgnoreCaseAndPropietario(query, u);
+	public List<Producto> buscarMisProductos(String query, Usuario vendedor){
+		return repositorio.findByNombreContainsIgnoreCaseAndVendedor(query, vendedor);
 	}
 	
 	/**
@@ -177,13 +177,13 @@ public class ProductoServicioImpl implements IProductoServicio{
 	 * ya proporcionaba el Interfaz, pero se implementa por mantener la logica
 	 * descrita al comienzo y darle escalabilidad (quien sabe si en el futuro
 	 * la aplicacion crece y tenemos que implementar algun otro rasgo distintivo).
-	 * @param c
+	 * @param compra
 	 * @return
 	 */
 	
 	@Override
-	public List<Producto> productosDeUnaCompra(Compra c){
-		return repositorio.findByCompra(c);
+	public List<Producto> productosDeUnaCompra(Compra compra){
+		return repositorio.findByCompra(compra);
 	}
 	
 	/**
@@ -229,13 +229,13 @@ public class ProductoServicioImpl implements IProductoServicio{
 	 * En este caso concreto estamos usando la funcionalidad del metodo
 	 * guardar, para actuar sobre un PRODUCTO existente en la Base de Datos
  	 * "Machacando" la version existente por otra con los cambios realizados.
-	 * @param p
+	 * @param producto
 	 * @return
 	 */
 	
 	@Override
-	public Producto editar(Producto p) {
-		return repositorio.save(p);
+	public Producto editar(Producto producto) {
+		return repositorio.save(producto);
 	}
 	
 	/**
@@ -262,7 +262,7 @@ public class ProductoServicioImpl implements IProductoServicio{
 	 */
 	
 	@Override
-	public void borrar(Producto p) {
-		repositorio.delete(p);
+	public void borrar(Producto producto) {
+		repositorio.delete(producto);
 	}
 }

@@ -30,12 +30,12 @@ public class GeneradorPDF {
             PdfWriter.getInstance(documento, out);
             documento.open();
             documento.add(new Paragraph("Factura: " + compra.getId(),
-                    FontFactory.getFont("arial",   // fuente
+                    FontFactory.getFont("arial",   			// fuente
                             22,                            // tamaño
                             Font.ITALIC,                   // estilo
                             BaseColor.CYAN)));             // color
-            documento.add(new Paragraph("Comprado por: " + compra.getPropietario().getNombre() + " " + compra.getPropietario().getApellidos()));
-            documento.add(new Paragraph("Correo electrónico: " + compra.getPropietario().getEmail()));
+            documento.add(new Paragraph("Comprado por: " + compra.getComprador().getNombre() + " " + compra.getComprador().getApellidos()));
+            documento.add(new Paragraph("Correo electrónico: " + compra.getComprador().getEmail()));
             documento.add(new Paragraph("Fecha de la compra: " + compra.getFechaCompra()));
             documento.add(new Paragraph("Listados de productos:"));
             documento.add(new Paragraph(""));
