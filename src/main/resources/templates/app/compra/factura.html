@@ -2,6 +2,7 @@
 <!-- NameSpace de Thymeleaf como Motor de Plantillas y Thymeleaf Extras para usar Spring Security en la Vista  -->
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <!-- HEAD (Fragment head.html)-->
+
 <head th:insert="fragments/head :: head" />
 
 <body>
@@ -16,7 +17,7 @@
 	</div>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-offset-3 col-md-6" >
+			<div class="col-md-offset-3 col-md-6">
 				<div class="panel panel-default">
 					<div class="panel-heading" style="background: #69b72a;color: white;">
 						<span class="panel-title" style="font-size: 25px;">FACTURA</span>
@@ -26,11 +27,12 @@
 					</div>
 					<div class="panel-body invoice-body">
 						<div class="table-datos">
-							<table >
+							<table>
 								<tr>
 									<td>
 										<strong>Comprador: </strong>
-										<span th:text="${compra.propietario.nombre + ' ' + compra.propietario.apellidos}"></span>
+										<span
+											th:text="${compra.propietario.nombre + ' ' + compra.propietario.apellidos}"></span>
 									</td>
 								</tr>
 								<tr>
@@ -110,6 +112,17 @@
 							</table>
 						</div>
 					</div>
+				</div>
+				<div class="botones">
+					<!-- VOLVER HACIA ATRAS -->
+					<a class="inicio " th:href="@{/app/miscompras}" >
+						<span class="btn btn-success pull-right glyphicon glyphicon-arrow-left" style="margin-left: 15px; width: 100px;"></span>
+					</a>
+					<!-- GENERO PDF DE LA FACTURA con mi SERVICIO HTML2PDF de facturas-->
+					<a th:href="@{/app/miscompras/pdf/factura/{id}(id=${compra.id})}" class="btn btn-danger pull-right" style="margin-left: -50px;">
+						<span class="glyphicon glyphicon-download-alt"></span> 
+						&nbsp;&nbsp;Descargar Factura en PDF
+					</a>
 				</div>
 			</div>
 		</div>

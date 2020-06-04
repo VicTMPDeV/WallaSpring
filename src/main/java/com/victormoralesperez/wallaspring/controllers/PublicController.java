@@ -1,11 +1,21 @@
 package com.victormoralesperez.wallaspring.controllers;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.victormoralesperez.wallaspring.models.Compra;
 import com.victormoralesperez.wallaspring.models.Producto;
+import com.victormoralesperez.wallaspring.services.ICompraServicio;
 import com.victormoralesperez.wallaspring.services.IProductoServicio;
 
 /**
@@ -35,6 +45,19 @@ public class PublicController {
 
 	@Autowired
 	IProductoServicio productoServicio;
+	
+	/**
+	 * ATRIBUTO
+	 * ---------------------------------------------------------------------------------------
+	 * Bean de Servicio Auto-Inyectado (Spring con esta anotacion sabe que el Bean
+	 * compraServicio se inyecta como Dependencia en la Clase CompraController).
+	 * Este Servicio nos proporciona un metodo de obtencion de datos relacionados
+	 * con la Entidad Compra de la Base de Datos, haciendo uso de los Repositorios
+	 * que mapean dicha informacion relacional en Objetos.
+	 */
+	
+	@Autowired
+	ICompraServicio compraServicio;
 
 	/**
 	 * METODO
@@ -82,29 +105,39 @@ public class PublicController {
 		}
 		return "index";
 	}
-
+	
 	/**
 	 * METODO
 	 * ---------------------------------------------------------------------------------------
-	 * Metodo que atiende una Peticion GET en la ruta "/producto" y con una Variable 
-	 * {id} en la URL que sera inyectada pasandola por parametros con la
-	 * anotacion @PathVariable y el tipo de dato de la misma y que se usara para
+	 * Metodo que atiende una Peticion GET en las rutas "/producto/" y "/producto_vendido/"
+	 * y con una Variable {id} en la URL que sera inyectada pasandola por parametros 
+	 * con la anotacion @PathVariable y el tipo de dato de la misma y que se usara para
 	 * realizar una busqueda realizada por el Servicio hacia la BD usando el
 	 * Repositorio de Productos. En caso de encontrar el producto con el id
 	 * asociado, lo anyade al Model para enviarlo a la Vista con la CLAVE "producto"
 	 * y VALOR el obtenido por el metodo del Repositorio. De no encontrar resultado,
 	 * sigue mostrando todos los productos dado que no hemos anyadido nada nuevo al
 	 * Model.
+	 * 
+	 * 
+	 * AÑADIR LA EXPLICACION DEL CAMPO COMPRA 
+	 * 
+	 * 
 	 * @param id
 	 * @param model
 	 * @return
 	 */
 
-	@GetMapping("/producto/{id}")
+	@GetMapping({"/producto/{id}","/producto_vendido/{id}"})
 	public String showProduct(@PathVariable Long id, Model model) {
-		Producto result = productoServicio.findById(id);
-		if (result != null) {
-			model.addAttribute("producto", result);
+		Producto p = productoServicio.findById(id);
+		if (p != null) {
+			model.addAttribute("producto", p);
+			if(p.getCompra() != null) {
+				Compra c = compraServicio.buscarPorId(p.getCompra().getId());
+				model.addAttribute("compra", c);
+				return "producto_vendido";
+			}
 			return "producto";
 		}
 		return "redirect:/public";

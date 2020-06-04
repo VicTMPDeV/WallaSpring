@@ -21,7 +21,7 @@
 			<div class="col-md-12" style="margin-bottom: 10px;">
 				<div class="panel panel-default">
 					<div class="panel-heading text-center" style="background: #69b72a;color: white;">
-						<span class="panel-title" style="font-size: 25px;">Mis Productos en Venta</span>
+						<span class="panel-title" style="font-size: 25px;">MIS PRODUCTOS EN VENTA</span>
 					</div>
 				</div>
 			</div>
@@ -47,9 +47,11 @@
 						<span th:text="${producto.nombre}">NOMBRE DEL PRODUCTO</span>
 						<!-- Estado del Producto -->
 						<span class="label label-danger pull-right" style="margin-top: 2px; padding: 1%"
-							th:if="${producto.compra != null}">&nbsp;VENDIDO&nbsp;</span>
+							th:if="${producto.compra != null}">&nbsp;VENDIDO&nbsp;
+						</span>
 						<span class="label label-info pull-right" style="margin-top: 2px; padding: 1%"
-							th:unless="${producto.compra != null}">&nbsp;DISPONIBLE&nbsp;</span>
+							th:unless="${producto.compra != null}">&nbsp;DISPONIBLE&nbsp;
+						</span>
 					</div>
 					<div class="panel-body">
 						<!-- Imagen Producto -->
@@ -67,11 +69,15 @@
 									<a class="edit" th:href="@{/app/misproductos/editar/{id} (id=${producto.id})}">
 										<span class="btn btn-warning" th:if="${producto.compra == null}">Editar</span>
 									</a>
-									&nbsp;
 									<!-- BORRAR Producto -->
 									<a class="borrar" th:if="${producto.compra == null}" th:data-id="${producto.id}" 
 										data-toggle="modal" data-target="#delete-modal" aria-label="close">
-										<span class="btn btn-danger">Borrar</span>
+										<span class="btn btn-danger" style="margin-left: 5px; margin-right: -5px;">Borrar</span>
+									</a>
+									<!-- DATOS COMPRADOR -->
+									<a class="comprador" th:if="${producto.compra != null}"
+										th:href="@{/public/producto_vendido/{id}(id=${producto.id})}">
+										<span class="btn btn-success">Datos Comprador</span>
 									</a>
 								</div>
 							</div>
@@ -81,14 +87,16 @@
 			</div>
 		</div>
 		<div class="row text-center">
+			<!-- VOLVER A INICIO -->
+			<a class="inicio" th:href="@{/}" >
+				<span class="btn btn-success text-center" style="margin: 10px; width: collapse; font-size: 18px;">Volver a Inicio</span>
+			</a>
 			<!-- BOTON ANYADIR NUEVO PRODUCTO-->
-			<div class="col-xs-12 col-md-12" style="margin-top: 10px;">
-				<a th:href="@{/app/misproductos/nuevo}" class="btn btn-lg btn-success">A&ntilde;adir Nuevo Producto</a>
-			</div>
+			<a class="newproduct" th:href="@{/app/misproductos/nuevo}" >
+				<span class="btn btn-info text-center" style="margin: 10px; width: collapse; font-size: 18px;">A&ntilde;adir Nuevo Producto</span>
+			</a>
 		</div>
 	</div>
-	<br>
-	<br>
 	<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">

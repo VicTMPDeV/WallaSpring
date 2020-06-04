@@ -19,7 +19,7 @@
 			<div class="col-md-offset-3 col-md-6" style="margin-bottom: 10px;">
 				<div class="panel panel-default">
 					<div class="panel-heading text-center" style="background: #69b72a;color: white;">
-						<span class="panel-title" style="font-size: 25px;">Mis Compras</span>
+						<span class="panel-title" style="font-size: 25px;">MIS COMPRAS</span>
 					</div>
 				</div>
 			</div>
@@ -41,8 +41,8 @@
 					<div class="panel-heading" style="background: #69b72a;color: white;">
 						<span class="panel-title" style="font-size: 18px;">Listado de Facturas</span>
 					</div>
-					<div class="panel-body invoice-body">
-						<div class="table-responsive">
+					<div class="panel-body invoice-body text-center">
+						<div class="table-responsive col-md-12">
 							<table class="table table-striped">
 								<thead>
 									<tr style="font-size: 16px;">
@@ -55,21 +55,30 @@
 								<tbody>
 								<!-- Para cada compra -->
 									<tr th:each="compra : ${mis_compras}" style="font-size: 16px;">
-										<td style="vertical-align: middle;"><span th:text="${compra.id}">1</span></td>
-										
-										<td style="vertical-align: middle;"><span th:text="${#dates.format(compra.fechaCompra,'dd/MMM/yyyy &nbsp;HH:mm')}" style="vertical-align: middle;">10/10/2018 10:10</span></td>
-										<!-- Muestro la factura en HTML -->
-										<td><a th:href="@{/app/miscompras/factura/{id}(id=${compra.id})}" class="btn btn-info pull-right">
-											<span class="glyphicon glyphicon-search"></span> &nbsp;&nbsp;Ver Factura</a></td>
-										<!-- Muestro la factura en PDF con mi servicio de facturas-->
-										<td><a th:href="@{/app/miscompras/pdf/factura/{id}(id=${compra.id})}" class="btn btn-default pull-right" style="margin-left: -50px;">
-											<span class="glyphicon glyphicon-download-alt"></span> &nbsp;&nbsp;Descargar Factura en PDF</a>
+										<td style="vertical-align: middle;">
+											<span th:text="${compra.id}">1</span>
+										</td>
+										<td style="vertical-align: middle;">
+											<span th:text="${#dates.format(compra.fechaCompra,'dd/MMM/yyyy &nbsp;HH:mm')}" style="vertical-align: middle;">10/10/2018 10:10</span>
+										</td>
+										<td></td>
+										<td>
+											<a th:href="@{/app/miscompras/factura/{id}(id=${compra.id})}" class="btn btn-info pull-right">
+											<span class="glyphicon glyphicon-search"></span> 
+											&nbsp;&nbsp;Ver Factura
+											</a>
 										</td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
 					</div>
+				</div>
+				<!-- VOLVER A INICIO -->
+				<div class="text-center">
+					<a class="inicio" th:href="@{/}" >
+						<span class="btn btn-success text-center" style="margin-top: 10px; width: 150px; font-size: 18px;">Volver a Inicio</span>
+					</a>
 				</div>
 			</div>
 		</div>
