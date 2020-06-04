@@ -123,9 +123,10 @@ public class UsuarioController {
 	 */
 	
 	@GetMapping("/") // DIRECTORIO RAIZ
-	public String wellcome() {
+	public String landingPage() {
 		return "redirect:/public/"; //ACCESO DIRECTO A LA PAGINA WEB, PARA TODO EL MUNDO, SIN AUTENTICAR.
 	}
+	
 	
 	/*
 	 * ---------------------------------------------------------------------------------------
@@ -241,8 +242,8 @@ public class UsuarioController {
 	 * @return
 	 */
 
-	@ModelAttribute("misdatos")
-	public Usuario misDatos() {
+	@ModelAttribute("mis_datos")
+	public Usuario mis_datos() {
 		String email = SecurityContextHolder.getContext().getAuthentication().getName();
 		usuario = usuarioServicio.buscarPorEMail(email);
 		return usuario;
@@ -251,18 +252,18 @@ public class UsuarioController {
 	/**
 	 * METODO
 	 * ---------------------------------------------------------------------------------------
-	 * Metodo que atiende una Peticion GET en la ruta "/app/miperfil". Nos da acceso
+	 * Metodo que atiende una Peticion GET en la ruta "/app/mi_perfil". Nos da acceso
 	 * a los datos del Usuario Autenticado y ademas inyectamos en el Model el dinero
 	 * que ha ganado el Usuario con las Ventas. El metodo devuelve un String que es la
 	 * ruta de la plantilla html (sin indicar la extension de la misma) que muestra
-	 * la lista de productos propiedad del Usuario.
+	 * el listado de productos propiedad del Usuario.
 	 * 
 	 * @param model
 	 * @param query
 	 * @return
 	 */
 
-	@GetMapping("/app/miperfil")
+	@GetMapping("/app/mi_perfil")
 	public String list(Model model) {
 		List<Producto> misVentas = productoServicio.productosDeUnPropietario(usuario);
 		List<Compra> misCompras = compraServicio.buscarTodasPorPropietario(usuario);
@@ -283,7 +284,7 @@ public class UsuarioController {
 		}
 		model.addAttribute("misventas", totalVentas);
 		model.addAttribute("miscompras", totalCompras);
-		return "app/usuario/perfil";
+		return "app/usuario/user_profile";
 	}
 	
 	/**
@@ -309,18 +310,18 @@ public class UsuarioController {
 	 * @return
 	 */
 	
-    @GetMapping("/app/miperfil/editar/{id}")
-    public String editarUsuario(Model model) { //EN EL MODEL YA ESTA COMO VARIABLE GLOBAR TODA LA INFO DEL USUARIO CON CLAVE "misdatos"
-        return "app/usuario/usuarioForm";
+    @GetMapping("/app/mi_perfil/editar/{id}")
+    public String editarUsuario(Model model) { //EN EL MODEL YA ESTA COMO VARIABLE GLOBAR TODA LA INFO DEL USUARIO CON CLAVE "mis_datos"
+        return "app/usuario/user_form";
     }
     
     /**
      * METODO 
 	 * ---------------------------------------------------------------------------------------
 	 * Metodo que atiende una peticion POST en la ruta "/misproductos/editar/{id}"
-	 * la cual se produce al pulsar sobre el Boton Enviar de la plantilla ficha.html.
+	 * la cual se produce al pulsar sobre el Boton Enviar de la plantilla user_profile.html.
 	 * El Metodo recoge el Atributo producto del Model que contiene los datos del 
-	 * Formulario de la plantilla ficha.html.
+	 * Formulario de la plantilla user_profile.html.
 	 * Por otro lado, al incluir una imagen, recibimos un mensaje Multipart de HTTP,
 	 * el cual gestionamos en el Controlador con la Clase MultipartFile, que posee
 	 * los metodos convenientes para permitirnos procesar la parte de la peticion
@@ -345,8 +346,8 @@ public class UsuarioController {
      * @return
      */
     
-    @PostMapping("/app/miperfil/editar/submit")
-    public String editarUsuarioSubmit(@ModelAttribute("misdatos") Usuario usuarioEditado, @RequestParam("file") MultipartFile file) {
+    @PostMapping("/app/mi_perfil/editar/submit")
+    public String editarUsuarioSubmit(@ModelAttribute("mis_datos") Usuario usuarioEditado, @RequestParam("file") MultipartFile file) {
             // Buscamos el antiguo Usuario para sacar los datos (CREAMOS UNA COPIA PARA TRABAJAR CON ELLA)
     		Usuario usr = usuarioServicio.findById(usuarioEditado.getId());
     		// Si me han enviado el fichero con una imagen sera porque la quieren Editar y cambiar
@@ -358,7 +359,7 @@ public class UsuarioController {
             // Actualizamos el producto
             usuarioServicio.editar(usuarioEditado);
             // Redirigimos a la pagina de los Productos del Usuario
-            return "redirect:/app/miperfil";
+            return "redirect:/app/mi_perfil";
     }
     
 }

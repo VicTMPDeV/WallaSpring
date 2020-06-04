@@ -14,9 +14,11 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.victormoralesperez.wallaspring.validationservice.UniqueUsername;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.victormoralesperez.wallaspring.services.UniqueUsername;
 
 /**
  * CLASE Usuario

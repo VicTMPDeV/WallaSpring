@@ -115,11 +115,11 @@
 				</div>
 				<div class="botones">
 					<!-- VOLVER HACIA ATRAS -->
-					<a class="inicio " th:href="@{/app/miscompras}" >
+					<a class="inicio " th:href="@{/app/mis_compras}" >
 						<span class="btn btn-success pull-right glyphicon glyphicon-arrow-left" style="margin-left: 15px; width: 100px;"></span>
 					</a>
 					<!-- GENERO PDF DE LA FACTURA con mi SERVICIO HTML2PDF de facturas-->
-					<a th:href="@{/app/miscompras/pdf/factura/{id}(id=${compra.id})}" class="btn btn-danger pull-right" style="margin-left: -50px;">
+					<a th:href="@{/app/mis_compras/pdf/factura/{id}(id=${compra.id})}" class="btn btn-danger pull-right" style="margin-left: -50px;">
 						<span class="glyphicon glyphicon-download-alt"></span> 
 						&nbsp;&nbsp;Descargar Factura en PDF
 					</a>

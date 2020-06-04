@@ -27,7 +27,7 @@
 				</div>
 				<div class="panel-body">
 					<form id="editform" class="form-horizontal" role="form" method="POST" enctype="multipart/form-data" action="#" 
-						th:action="${producto.id != 0} ? @{/app/misproductos/editar/submit} : @{/app/misproductos/nuevo/submit}"
+						th:action="${producto.id != 0} ? @{/app/mis_productos/editar/submit} : @{/app/mis_productos/nuevo/submit}"
 						th:object="${producto}"><!-- ${producto} Mapea el Command Object procedente del Controlador -->
 						<!-- Campo: ID (Hidden, oculto, lo gestiona Spring Data JPA -->
 						<input type="hidden" id="id" name="id" th:field="*{id}" />

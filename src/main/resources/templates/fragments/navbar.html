@@ -17,13 +17,13 @@
                     <a th:href="@{/}">Inicio</a>
                 </li>
                 <li sec:authorize="isAuthenticated()">
-                    <a th:href="@{/app/miperfil}">Mi Perfil</a><!--CAMBIAR RUTA-->
+                    <a th:href="@{/app/mi_perfil}">Mi Perfil</a><!--CAMBIAR RUTA-->
                 </li>
                 <li sec:authorize="isAuthenticated()">
-                    <a th:href="@{/app/misproductos}">Mis Productos</a>
+                    <a th:href="@{/app/mis_productos}">Mis Productos</a>
                 </li>
                 <li sec:authorize="isAuthenticated()">
-                    <a th:href="@{/app/miscompras}">Mis Compras</a>
+                    <a th:href="@{/app/mis_compras}">Mis Compras</a>
                 </li>
             </ul>
             <!-- Contenido ajustado a la Derecha del navbar -->
@@ -56,7 +56,7 @@
                     </ul>
                 </li>
             </ul>
-            <!-- Formulario de buscar -->
+            <!-- Barra de Busqueda -->
             <form class="navbar-form navbar-right">
                 <span class="glyphicon glyphicon-search" style="color:grey; vertical-align: middle;"></span>&nbsp;&nbsp;
                 <input type="text" class="form-control" placeholder="Buscar..." name="q" th:value="${param.q}">

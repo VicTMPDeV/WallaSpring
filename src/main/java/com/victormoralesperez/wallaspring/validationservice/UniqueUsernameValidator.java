@@ -1,4 +1,4 @@
-package com.victormoralesperez.wallaspring.services;
+package com.victormoralesperez.wallaspring.validationservice;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

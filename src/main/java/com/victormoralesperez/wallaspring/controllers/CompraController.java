@@ -355,7 +355,7 @@ public class CompraController {
 		}
 		session.removeAttribute("carrito");
 		session.removeAttribute("items_carrito");
-		return "redirect:/app/miscompras/factura/" + miCompra.getId();
+		return "redirect:/app/mis_compras/factura/" + miCompra.getId();
 	}
 	
 	/**
@@ -364,7 +364,7 @@ public class CompraController {
 	 * Metodo que atiende una Peticion GET en la ruta "/mis_compras". Nos muestra
 	 * los productos propiedad del Usuario que se encuentra autenticado (Una vez
 	 * han sido COMPRADOS).
-	 * El metodo redirige a la pagina "/app/compra/listado" donde se muestra la 
+	 * El metodo redirige a la pagina "/app/compra/compra_list" donde se muestra la 
 	 * lista de productos propiedad del Usuario (Una vez COMPRADOS).
 	 * 
 	 * @param model
@@ -372,15 +372,15 @@ public class CompraController {
 	 */
 	
 	//MOSTRAR EL HISTORICO DE MIS COMPRAS
-	@GetMapping("/miscompras")
+	@GetMapping("/mis_compras")
 	public String verMisCompras(Model model) {
-		return "/app/compra/listado";
+		return "/app/compra/compra_list";
 	}
 
 	/**
 	 * METODO
 	 * ---------------------------------------------------------------------------------------
-	 * Metodo que atiende una Peticion GET en la ruta "/miscompras/factura/{id}". 
+	 * Metodo que atiende una Peticion GET en la ruta "/mis_compras/factura/{id}". 
 	 * El PathVariable que se indica es el Identificador de la Compra (Se genera
 	 * al Finalizar una Compra).
 	 * Primero Recuperamos la Compra de la Base de Datos buscando por su ID.
@@ -397,7 +397,7 @@ public class CompraController {
 	 * @return
 	 */
 
-	@GetMapping("/miscompras/factura/{id}") 
+	@GetMapping("/mis_compras/factura/{id}") 
     public String factura(Model model, @PathVariable Long id) {
         Compra miCompra = compraServicio.buscarPorId(id);
         List<Producto> productosCarrito = productoServicio.productosDeUnaCompra(miCompra);
@@ -417,7 +417,7 @@ public class CompraController {
 	 * Metodo que atiende una Peticion HTTP usando la anotacion @RequestMapping
 	 * (anotacion con cierta antiguedad, de versiones de Spring previas) donde
 	 * indica que es de tipo GET en los Parametros. Escucha en la direccion
-	 * "/miscompras/factura/pdf/{id}".
+	 * "/mis_compras/factura/pdf/{id}".
 	 * Su funcion es la de generar un Informe en formato PDF, haciendo uso de la 
 	 * Libreria iTexT para Java, la cual hemos importado como dependencia Maven en 
 	 * el pom.xml.
@@ -432,7 +432,7 @@ public class CompraController {
 	 * @return
 	 */
 	
-    @RequestMapping(value = "/miscompras/factura/pdf/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_PDF_VALUE)
+    @RequestMapping(value = "/mis_compras/factura/pdf/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<InputStreamResource> facturaPDF(@PathVariable Long id) {
         Compra miCompra = compraServicio.buscarPorId(id);
         List<Producto> productosCarrito = productoServicio.productosDeUnaCompra(miCompra);
@@ -461,7 +461,7 @@ public class CompraController {
      */
     
     // Saco la factura generada con el servicio, le cambio el PATH
-    @RequestMapping(value = "/miscompras/pdf/factura/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_PDF_VALUE)
+    @RequestMapping(value = "/mis_compras/pdf/factura/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity facturaHTML2PDF(@PathVariable Long id) {
 
         Compra miCompra = compraServicio.buscarPorId(id);

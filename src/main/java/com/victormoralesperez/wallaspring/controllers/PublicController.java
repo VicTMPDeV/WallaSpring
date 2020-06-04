@@ -1,9 +1,6 @@
 package com.victormoralesperez.wallaspring.controllers;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +9,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import com.victormoralesperez.wallaspring.models.Compra;
 import com.victormoralesperez.wallaspring.models.Producto;
 import com.victormoralesperez.wallaspring.services.ICompraServicio;
@@ -83,7 +79,7 @@ public class PublicController {
 	 * Metodo que atiende una Peticion GET en las 2 rutas que se indican. Nos muestra
 	 * los productos disponibles sin vender en el Index de la pagina. Recibe por
 	 * Parametros una Query que no es obligatoria y que si tiene algun valor sera
-	 * porque estamos buscando algun producto concreto, y un objeto de la Clase
+	 * porque estamos buscando algun producto de Otro Usuario paraCOMPRAR, y un objeto
 	 * Model (Model es un Map que nos permite pasar Objetos del Controlador a la
 	 * Vista). Si la Query trae consigo algun valor, se lo inyectamos al Model con
 	 * la Clave "productos" y Valor el devuelto por la busqueda realizada por el

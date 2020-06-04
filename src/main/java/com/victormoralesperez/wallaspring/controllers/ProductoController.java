@@ -107,7 +107,7 @@ public class ProductoController {
 	 * @return
 	 */
 
-	@ModelAttribute("misproductos")
+	@ModelAttribute("mis_productos")
 	public List<Producto> misProductos() {
 		String email = SecurityContextHolder.getContext().getAuthentication().getName();
 		usuarioVendedor = usuarioServicio.buscarPorEMail(email);
@@ -119,8 +119,8 @@ public class ProductoController {
 	 * ---------------------------------------------------------------------------------------
 	 * Metodo que atiende una Peticion GET en la ruta "/mis_productos". Nos muestra
 	 * los productos propiedad del Usuario que se encuentra autenticado. Recibe por
-	 * Parametros una query que no es obligatoria y que si tiene algun valor sera
-	 * porque estamos buscando algun producto concreto, y un objeto de la Clase
+	 * Parametros una Query que no es obligatoria y que si tiene algun valor sera
+	 * porque estamos buscando algun producto concreto DE NUESTRA LISTA, y un objeto
 	 * Model (Model es un Map que nos permite pasar Objetos del Controlador a la
 	 * Vista). Si la Query trae consigo algun valor, se lo inyectamos al Model con
 	 * la Clave "mis_productos" y Valor el devuelto por la busqueda realizada por el
@@ -129,25 +129,25 @@ public class ProductoController {
 	 * query (no hemos querido buscar nada), la Clave "mis_productos" del Model
 	 * seguira mostrando todos los productos. El metodo devuelve un String que es la
 	 * ruta de la plantilla html (sin indicar la extension de la misma) que muestra
-	 * la lista de productos propiedad del Usuario.
+	 * la Lista de Productos propiedad del Usuario.
 	 * 
 	 * @param model
 	 * @param query
 	 * @return
 	 */
 
-	@GetMapping("/misproductos")
+	@GetMapping("/mis_productos")
 	public String list(Model model, @RequestParam(name = "q", required = false) String query) {
 		if (query != null) {
-			model.addAttribute("misproductos", productoServicio.buscarMisProductos(query, usuarioVendedor));
+			model.addAttribute("mis_productos", productoServicio.buscarMisProductos(query, usuarioVendedor));
 		}
-		return "app/producto/lista";
+		return "app/producto/producto_list";
 	}
 
 	/**
 	 * METODO
 	 * ---------------------------------------------------------------------------------------
-	 * Metodo que atiende una Peticion GET en la ruta "/misproductos/nuevo" para
+	 * Metodo que atiende una Peticion GET en la ruta "/mis_productos/nuevo" para
 	 * INSERTAR un Nuevo Producto en el Sistema. Se inyecta en el Model un Command
 	 * Object, que es el Bean que recogera la informacion que se introduzca en el
 	 * Formulario. El Command Object tendra tantos atributos como campos tenga el
@@ -156,29 +156,29 @@ public class ProductoController {
 	 * para Mapear una Entidad de la Base de Datos (Producto). Es por ello que el
 	 * Command Object sera un Objeto Vacio de la Clase Producto del Modelo. El
 	 * Command Object se Mapea en la Vista en la plantilla correspondiente (En este
-	 * caso en la plantilla ficha.html) a través de la Clave del Model (recordemos
+	 * caso en la plantilla producto_form.html) a través de la Clave del Model (recordemos
 	 * que es un Map Clave-Valor) "producto" y se accedera en la propia Vista a los
-	 * Atributos del mismo usando Thymeleaf (ver comentarios en ficha.html).
+	 * Atributos del mismo usando Thymeleaf (ver comentarios en producto_form.html).
 	 * Finalmente el metodo devuelve la URL "app/producto/form" a mostrar en el
-	 * Navegador donde cargara la plantilla asociada a dicha URL (ficha.html).
+	 * Navegador donde cargara la plantilla asociada a dicha URL (producto_form.html).
 	 * 
 	 * @param model
 	 * @return
 	 */
 
-	@GetMapping("/misproductos/nuevo")
+	@GetMapping("/mis_productos/nuevo")
 	public String nuevoProductoForm(Model model) {
 		model.addAttribute("producto", new Producto());
-		return "app/producto/ficha";
+		return "app/producto/producto_form";
 	}
 
 	/**
 	 * METODO
 	 * ---------------------------------------------------------------------------------------
 	 * Metodo que atiende una peticion POST en la ruta "/misproducto/nuevo/submit"
-	 * la cual se produce al pulsar sobre el Boton Enviar de la plantilla ficha.html.
+	 * la cual se produce al pulsar sobre el Boton Enviar de la plantilla producto_form.html.
 	 * El Metodo recoge el Atributo producto del Model que contiene los datos del 
-	 * Formulario de la plantilla ficha.html.
+	 * Formulario de la plantilla producto_form.html.
 	 * Por otro lado, al incluir una imagen, recibimos un mensaje Multipart de HTTP,
 	 * el cual gestionamos en el Controlador con la Clase MultipartFile, que posee
 	 * los metodos convenientes para permitirnos procesar la parte de la peticion
@@ -197,11 +197,11 @@ public class ProductoController {
 	 * @return
 	 */
 
-	@PostMapping("/misproductos/nuevo/submit")
+	@PostMapping("/mis_productos/nuevo/submit")
 	public String nuevoProductoSubmit(@Valid @ModelAttribute Producto producto, BindingResult bindingResult, @RequestParam("file") MultipartFile file) {
 		// Validacion del Contenido del Formulario
 		if (bindingResult.hasErrors()) { 						//...Si contiene Errores...
-			return "app/producto/ficha"; 						//...Redirijo a la Ficha.
+			return "app/producto/producto_form"; 						//...Redirijo a la producto_form.
 		} else {						 						//...Si todo es Correcto...
 			// ...Subimos la Imagen
 			if (!file.isEmpty()) {								//...Si el Fichero no esta Vacio
@@ -211,14 +211,14 @@ public class ProductoController {
 			//...Exista o no fichero de imagen asociado al Producto, lo insertaremos a continuacion... (Cuidado con poner ELSE que la vas a cagar pero bien... reflexiona acerca de sus consecuencias...)
 			producto.setVendedor(usuarioVendedor); 				// Indicamos el Usuario Vendedor del Producto a insertar (No se recibe desde el Formulario)
 			productoServicio.insertar(producto); 				// Finalmente Insertamos
-			return "redirect:/app/misproductos"; 				// Redirige
+			return "redirect:/app/mis_productos"; 				// Redirige
 		}
 	}
 	
 	/**
 	 * METODO
 	 * ---------------------------------------------------------------------------------------
-	 * Metodo que atiende una Peticion GET en la ruta "/misproductos/editar/{id}" 
+	 * Metodo que atiende una Peticion GET en la ruta "/mis_productos/editar/{id}" 
 	 * para que un Usuario Registrado y Autenticado pueda EDITAR un Producto Existente 
 	 * (que sea de su propiedad) en el Sistema. Recibe una Variable {id}, que es
 	 * el ID del Producto a Editar. 
@@ -227,35 +227,35 @@ public class ProductoController {
 	 * Zona Privada de Productos del Usuario.
 	 * Si el Producto Existe, se inyecta en el Model un Command Object que contiene
 	 * el Objeto Producto recuperado de la Base de Datos y se redirige a la VISTA
-	 * de la Ficha del Producto para editar los Atributos del Objeto.
+	 * de la producto_form del Producto para editar los Atributos del Objeto.
 	 * El Command Object se Mapea en la Vista en la plantilla correspondiente (En 
-	 * este caso en la plantilla ficha.html) a través de la Clave del Model 
+	 * este caso en la plantilla producto_form.html) a través de la Clave del Model 
 	 * (recordemos que es un Map Clave-Valor) "producto" y se accedera en la propia 
-	 * Vista a los Atributos del mismo usando Thymeleaf (ver comentarios en ficha.html).
+	 * Vista a los Atributos del mismo usando Thymeleaf (ver comentarios en producto_form.html).
 	 * 
 	 * @param id
 	 * @param model
 	 * @return
 	 */
 	
-    @GetMapping("/misproductos/editar/{id}")
+    @GetMapping("/mis_productos/editar/{id}")
     public String editarProducto(@PathVariable Long id, Model model) {
         Producto p = productoServicio.findById(id);
         if (p != null) {
             model.addAttribute("producto", p);
-            return "app/producto/ficha";
+            return "app/producto/producto_form";
         } else {
-            return "redirect:/app/misproductos";
+            return "redirect:/app/mis_productos";
         }
     }
     
     /**
      * METODO 
 	 * ---------------------------------------------------------------------------------------
-	 * Metodo que atiende una peticion POST en la ruta "/misproductos/editar/{id}"
-	 * la cual se produce al pulsar sobre el Boton Enviar de la plantilla ficha.html.
+	 * Metodo que atiende una peticion POST en la ruta "/mis_productos/editar/{id}"
+	 * la cual se produce al pulsar sobre el Boton Enviar de la plantilla producto_form.html.
 	 * El Metodo recoge el Atributo producto del Model que contiene los datos del 
-	 * Formulario de la plantilla ficha.html.
+	 * Formulario de la plantilla producto_form.html.
 	 * Por otro lado, al incluir una imagen, recibimos un mensaje Multipart de HTTP,
 	 * el cual gestionamos en el Controlador con la Clase MultipartFile, que posee
 	 * los metodos convenientes para permitirnos procesar la parte de la peticion
@@ -280,11 +280,11 @@ public class ProductoController {
      * @return
      */
     
-    @PostMapping("/misproductos/editar/submit")
+    @PostMapping("/mis_productos/editar/submit")
     public String editarProductoSubmit(@Valid @ModelAttribute("producto") Producto productoEditado, BindingResult bindingResult, @RequestParam("file") MultipartFile file) {
         // Si el Formulario tiene errores
         if (bindingResult.hasErrors()) {
-            return "app/producto/ficha";
+            return "app/producto/producto_form";
         } else {
             // Buscamos el antiguo producto para sacar los datos (CREAMOS UNA COPIA PARA TRABAJAR CON ELLA)
             Producto p = productoServicio.findById(productoEditado.getId());
@@ -305,7 +305,7 @@ public class ProductoController {
             // Actualizamos el producto
             productoServicio.editar(productoEditado);
             // Redirigimos a la pagina de los Productos del Usuario
-            return "redirect:/app/misproductos";
+            return "redirect:/app/mis_productos";
         }
     }
 
@@ -329,13 +329,13 @@ public class ProductoController {
 	 * @return
 	 */
 
-	@GetMapping("/misproductos/{id}/eliminar")
+	@GetMapping("/mis_productos/{id}/eliminar")
 	public String eliminar(@PathVariable Long id) {
 		Producto producto = productoServicio.findById(id);
 		if (producto.getCompra() == null) { // SI EL PRODUCTO NO ESTA COMPRADO YA POR OTRO CLIENTE
 			productoServicio.borrar(producto);
 		}
-		return "redirect:/app/misproductos";
+		return "redirect:/app/mis_productos";
 	}
 
 }

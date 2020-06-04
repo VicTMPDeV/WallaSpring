@@ -28,18 +28,18 @@
 		</div>
 	</div>
 	<div class="container">
-		<div class="row" th:if="${#lists.isEmpty(misproductos)}">
+		<div class="row" th:if="${#lists.isEmpty(mis_productos)}">
 		<div class="col-md-offset-1 col-md-10">
 				<div class="jumbotron" style="background: white;margin-bottom: 50px;margin-top: 40px;">
 					<div class="container" style="padding-bottom: 1%;">
-						<h2 class="text-center" style="color: red;">Todav&iacute;a No has subido ning&uacute;n Producto a la Plataforma</h2>
+						<h2 class="text-center" style="color: red;">No Existen Productos para Mostrar</h2>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="row" th:unless="${#lists.isEmpty(misproductos)}">
+		<div class="row" th:unless="${#lists.isEmpty(mis_productos)}">
 			<!-- Recorremos todos los productos: Foreach -->
-			<div class="col-lg-4" th:each="producto : ${misproductos}">
+			<div class="col-lg-4" th:each="producto : ${mis_productos}">
 				<!-- PANEL QUE CONTIENE CADA PRODUCTO -->
 				<div class="panel panel-default panel-producto" style="margin-bottom: 30px;">
 					<div class="panel-heading" style="background-color: #69b72a; color: white">
@@ -66,7 +66,7 @@
 							<div class="col-md-8">
 								<div class="pull-right">
 									<!-- EDITAR Producto -->
-									<a class="edit" th:href="@{/app/misproductos/editar/{id} (id=${producto.id})}">
+									<a class="edit" th:href="@{/app/mis_productos/editar/{id} (id=${producto.id})}">
 										<span class="btn btn-warning" th:if="${producto.compra == null}">Editar</span>
 									</a>
 									<!-- BORRAR Producto -->
@@ -92,7 +92,7 @@
 				<span class="btn btn-success text-center" style="margin: 10px; width: collapse; font-size: 18px;">Volver a Inicio</span>
 			</a>
 			<!-- BOTON ANYADIR NUEVO PRODUCTO-->
-			<a class="newproduct" th:href="@{/app/misproductos/nuevo}" >
+			<a class="newproduct" th:href="@{/app/mis_productos/nuevo}" >
 				<span class="btn btn-info text-center" style="margin: 10px; width: collapse; font-size: 18px;">A&ntilde;adir Nuevo Producto</span>
 			</a>
 		</div>
@@ -127,7 +127,7 @@
 				var data = button.data('id');
 				var modal = $(this);
 				var a = modal.find('.modal-body a')[0];
-				a.href = '/app/misproductos/' + data + '/eliminar';
+				a.href = '/app/mis_productos/' + data + '/eliminar';
 			});
 		});
 	</script>
