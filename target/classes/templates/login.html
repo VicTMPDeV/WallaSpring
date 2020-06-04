@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!-- NameSpace de Thymeleaf como Motor de Plantillas y Thymeleaf Extras para usar Spring Security en la Vista  -->
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!-- HEAD (Ver Fragment)-->
+<head th:replace="fragments/head :: head" />
+<body>
+	<!-- BARRA SUPERIOR DE NAVEGACION (Ver Fragment)-->
+	<div class="navbar">
+		<nav th:replace="fragments/navbar :: navbar" />
+	</div>
+	<!-- LOGO (Fragment logo.html)-->
+	<div class="logo">
+		<div th:replace="fragments/logo.html :: logo" />
+	</div>
+	<!-- FORMULARIO DE LOGIN: Username (email) y Password -->
+	<div class="container">
+		<div id="loginbox" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+			<div class="panel panel-default">
+				<div class="panel-heading" style="background-color: #69b72a; color: white">
+					<div class="panel-title" style="text-align: center; font-size: x-large;">ACCEDE A TU CUENTA</div>
+				</div>
+				<div class="panel-body" style="padding: 30px">
+					<!-- CAMPOS FORMULARIO Y ACCION POST -->
+					<form id="loginform" class="form-horizontal" role="form" method="POST" th:action="@{/auth/login-post}" >
+						<!-- CONTENEDOR QUE MUESTRA MENSAJE DE ERROR DE AUTENTICACION -->
+					<div id="login-alert" class="alert alert-danger col-sm-12" style="display: none">
+						<p>Error:</p>
+						<span></span>
+					</div>
+						<!-- Campo Email Usuario -->
+						<div class="input-group" style="margin-bottom: 25px" >
+							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+							<input id="login-username" type="text" class="form-control" name="username" placeholder="email" required>
+						</div>
+						<!-- Campos Password Usuario-->
+						<div class="input-group" style="margin-bottom: 30px">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+							<input id="login-password" type="password" class="form-control" name="password" placeholder="password" required>
+						</div>
+						<div class="col text-center">
+							<!-- Boton de Acceso-->
+							<div class="col-sm-12 controls" style="padding-bottom: 30px">
+								<button id="btn-login" type="submit" class="btn btn-success" style="padding-left: 70px; padding-right: 70px;">Entrar</button>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-12 control">
+								<div style="border-top: 1px solid #888; padding-top: 40px; text-align: center;">
+									¿Todavía no tienes una cuenta? ¡Puedes crearla ahora mismo
+									<a th:href="@{/auth/register}"><b>Pulsando Aquí!</b></a>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br>
+	<br>
+	<!-- PIE DE PAGINA (Fragment footer.html)-->
+	<div class="footer">
+		<footer th:insert="fragments/footer :: footer" class="navbar-inverse navbar-fixed-bottom"></footer>
+	</div>
+	<!-- SCRIPTS -->
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

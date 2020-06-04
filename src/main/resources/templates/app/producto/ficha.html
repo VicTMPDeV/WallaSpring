@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<!-- NameSpace de Thymeleaf como Motor de Plantillas y Thymeleaf Extras para usar Spring Security en la Vista  -->
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!-- HEAD (Fragment head.html)-->
+
+<head th:insert="fragments/head :: head" />
+
+<body>
+	<!-- BARRA SUPERIOR DE NAVEGACION (Fragment navbar.html)-->
+	<div class="navbar">
+		<nav th:replace="fragments/navbar :: navbar" />
+	</div>
+	<!-- LOGO (Fragment logo.html)-->
+	<div class="logo">
+		<div th:replace="fragments/logo.html :: logo" />
+	</div>
+	<!-- FORMULARIO PRODUCTOS -->
+	<!-- El mismo Formulario se emplea para Insertar Nuevo Producto y para Editar Producto -->
+	<!-- La Diferencia reside en que el Command Object que Recibe del Controlador tenga Id=0 (Nuevo Producto) o Id!=0 (Ya tiene un ID), es un Producto Existente -->
+	<div class="container">
+		<div id="productformbox" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+			<div class="panel panel-default">
+				<div class="panel-heading" style="background-color: #69b72a; color: white">
+					<div class="panel-title text-center" text-center style="font-size: x-large;">
+						<a th:text="${producto.id != 0} ? 'EDITAR PRODUCTO' : 'NUEVO PRODUCTO'">NoDataFound</a>
+					</div>
+				</div>
+				<div class="panel-body">
+					<form id="editform" class="form-horizontal" role="form" method="POST" enctype="multipart/form-data" action="#" 
+						th:action="${producto.id != 0} ? @{/app/misproductos/editar/submit} : @{/app/misproductos/nuevo/submit}"
+						th:object="${producto}"><!-- ${producto} Mapea el Command Object procedente del Controlador -->
+						<!-- Campo: ID (Hidden, oculto, lo gestiona Spring Data JPA -->
+						<input type="hidden" id="id" name="id" th:field="*{id}" />
+						<!-- Campo: Nombre -->
+						<div class="form-group" style="margin-top: 15px;">
+							<label for="nombre" class="col-md-2 control-label">Nombre</label>
+							<div class="col-md-9">
+								<!-- Campo Requerido Obligatoriamente (required) - Mapeamos el Valor del Campo hacia el Atributo del Command Object (th:field) -->
+								<input type="text" class="form-control" name="nombre"
+								th:field="*{nombre}" style="margin-left: 30px;" required /><!-- th:field="*{nombre}" Escribe el Nombre actual del Objeto -->
+							</div>
+						</div>
+						<!-- Campo: Precio -->
+						<div class="form-group" th:classappend="${#fields.hasErrors('precio')} ? 'has-error'">
+							<label for="precio" class="col-md-2 control-label">Precio &euro;</label>
+							<!-- Otra codificacion de Simbolo del Euro: (€) -->
+							<div class="col-md-9">
+								<input type="number" class="form-control" id="precio" step="0.01" 
+								th:field="*{precio}" style="margin-left: 30px;" required />
+								<!-- SI HAY ERRORES, ANYADIMOS UN MENSAJE DE TEXTO CON EL MENSAJE DE ERROR CORRESPONDIENTE -->
+								<span id="precio-error" class="help-block" th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}">ERRORES</span>
+							</div>
+						</div>
+						<!-- Imagen-->
+						<div class="form-group">
+							<label for="file" class="col-md-2 control-label">Imagen</label>
+							<div class="col-md-9">
+								<input type="file" class="form-control input-file" id="filebutton" name="file" style="margin-left: 30px;"/>
+							</div>
+						</div>
+						<!-- BOTON ENVIAR -->
+						<div class="col-md-12 text-center" style="padding-top: 15px;">
+							<button type="submit" class="btn btn-success" style="width: 150px;">Enviar</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- PIE DE PAGINA (Fragment footer.html)-->
+	<footer th:insert="fragments/footer :: footer" class="navbar-inverse navbar-fixed-bottom"></footer>
+	<!-- SCRIPTS al final para que carguen los ultimos y la pagina de sensacion de fluidez -->
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

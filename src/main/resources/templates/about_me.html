@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!-- NameSpace de Thymeleaf como Motor de Plantillas -->
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<!-- HEAD (Ver Fragment)-->
+<head th:replace="fragments/head :: head" />
+<body>
+	<!-- BARRA SUPERIOR DE NAVEGACION (Ver Fragment)-->
+	<div class="navbar">
+		<nav th:replace="fragments/navbar :: navbar" />
+	</div>
+	<!-- LOGO -->
+	<div class="container">
+		<div class="row">
+        	<div class="col-xs-offset-3 col-xs-12 col-md-offset-5 col-md-12">
+				<img th:src="@{/images/logo_victor.png}" class="img-responsive" >
+        	</div>
+		</div>
+	</div>
+	<!-- CONTENIDO ESTATICO -->
+	<div class="container">
+		<div id="aboutmebox" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+			<div class="panel panel-default">
+				<div class="panel-heading" style="background-color: #838d97; color: #ddc37d">
+					<div class="panel-title" style="text-align: center; font-size: x-large;">UN POCO SOBRE MI...</div>
+				</div>
+				<div class="panel-body" style="padding: 30px; background-color: #dbdbdb;">
+						<p class="text-justify">Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
+						Quam amet, itaque rem eum saepe animi in nam deserunt ex 
+						at culpa molestiae debitis dicta eveniet numquam assumenda. 
+						Cupiditate, nisi odit.</p>
+						<p class="text-justify">Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
+						Quam amet, itaque rem eum saepe animi in nam deserunt ex 
+						at culpa molestiae debitis dicta eveniet numquam assumenda. 
+						Cupiditate, nisi odit.</p>
+						<p class="text-justify">Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
+						Quam amet, itaque rem eum saepe animi in nam deserunt ex 
+						at culpa molestiae debitis dicta eveniet numquam assumenda. 
+						Cupiditate, nisi odit.</p>
+						<p class="text-justify">Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
+						Quam amet, itaque rem eum saepe animi in nam deserunt ex 
+						at culpa molestiae debitis dicta eveniet numquam assumenda. 
+						Cupiditate, nisi odit.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br>
+	<br>
+	<!-- PIE DE PAGINA (Fragment footer.html)-->
+	<div class="footer">
+		<footer th:insert="fragments/footer :: footer" class="navbar-inverse navbar-fixed-bottom"></footer>
+	</div>
+	<!-- SCRIPTS -->
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!-- NameSpace de Thymeleaf como Motor de Plantillas y Thymeleaf Extras para usar Spring Security en la Vista  -->
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!-- HEAD (Fragment head.html)-->
+
+<head th:insert="fragments/head :: head" />
+
+<body>
+	<!-- BARRA SUPERIOR DE NAVEGACION (Fragment navbar.html)-->
+	<div class="navbar">
+		<nav th:replace="fragments/navbar :: navbar" />
+	</div>
+	<!-- LOGO (Fragment logo.html)-->
+	<div class="logo">
+		<div th:replace="fragments/logo.html :: logo" />
+	</div>
+	<!-- FORMULARIO DE EDICION DE USUARIO -->
+	<div class="container">
+		<div id="userformbox" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+			<div class="panel panel-default">
+				<div class="panel-heading" style="background-color: #69b72a; color: white">
+					<div class="panel-title text-center" text-center style="font-size: x-large;">EDITAR USUARIO</div>
+				</div>
+				<div class="panel-body">
+					<form id="edituserform" class="form-horizontal" role="form" method="POST" enctype="multipart/form-data" action="#" 
+						th:action="@{/app/miperfil/editar/submit}"
+						th:object="${misdatos}"><!-- ${misdatos} Mapea el Command Object procedente del Controlador -->
+						<!-- Campo: Nombre -->
+						<div class="form-group" style="margin-top: 15px;">
+							<label for="nombre" class="col-md-2 control-label">Nombre</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" name="nombre" style="margin-left: 30px;"
+								pattern="[a-zA-Z ]{3,48}"
+								title="Nombre Incorrecto: Tama&ntilde;o Insuficiente o Caracteres No Validos"
+								th:field="*{nombre}" required /><!-- th:field="*{nombre}" Accede al Nombre actual del Usuario -->
+							</div>
+						</div>
+						<!-- Campo: Apellidos -->
+						<div class="form-group">
+							<label for="apellidos" class="col-md-2 control-label">Apellidos</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" nombre="apellidos" style="margin-left: 30px;"
+								pattern="[a-zA-Z]{3,48}\s[a-zA-Z]{3,48}"
+								title="Apellidos Incorrectos: Indique 2 Apellidos. Tama&ntilde;o Insuficiente o Caracteres No Validos"
+								th:field="*{apellidos}" required />
+							</div>
+						</div>
+						<!-- Campo: Avatar -->
+						<div class="form-group">
+							<label for="file" class="col-md-2 control-label">Avatar</label>
+							<div class="col-md-9">
+								<input type="file" class="form-control input-file" id="filebutton" name="file" style="margin-left: 30px;"/>
+								<p style="color: grey;margin-left: 30px;">* El tama&ntilde;o del archivo no puede ser superior a 5 Mb</p>
+							</div>
+						</div>
+						<!-- BOTON ENVIAR -->
+						<div class="col-md-12 text-center" style="padding-top: 15px;">
+							<button type="submit" class="btn btn-success" style="width: 150px;">Enviar</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- PIE DE PAGINA (Fragment footer.html)-->
+	<footer th:insert="fragments/footer :: footer" class="navbar-inverse navbar-fixed-bottom"></footer>
+	<!-- SCRIPTS al final para que carguen los ultimos y la pagina de sensacion de fluidez -->
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

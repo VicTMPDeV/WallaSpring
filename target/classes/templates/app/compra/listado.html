@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!-- Plantilla de cabecera, misma idea que el resto, mirar navbar y pie-->
+<head th:insert="fragments/head :: head" />
+<body>
+	<!-- BARRA SUPERIOR DE NAVEGACION (Fragment navbar.html)-->
+	<div class="navbar">
+		<nav th:replace="fragments/navbar :: navbar" />
+	</div>
+	<!-- CUERPO PRINCIPAL DE LA PAGINA -->
+	<!-- LOGO (Fragment logo.html)-->
+	<div class="logo">
+		<div th:replace="fragments/logo.html :: logo" />
+	</div>
+	<!-- PANEL DE PRODUCTOS COMPRADOS -->
+	<!-- TITULO -->
+	<div class="container">
+		<div class="row">
+			<div class="col-md-offset-3 col-md-6" style="margin-bottom: 10px;">
+				<div class="panel panel-default">
+					<div class="panel-heading text-center" style="background: #69b72a;color: white;">
+						<span class="panel-title" style="font-size: 25px;">Mis Compras</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- LO QUE SE MUESTRA SI ESTA VACIO -->
+		<div class="row" th:if="${#lists.isEmpty(mis_compras)}">
+		<div class="col-md-offset-1 col-md-10">
+				<div class="jumbotron" style="background: white; color: red;margin-top: 40px;">
+					<div class="container" style="padding-bottom: 1%;">
+						<h2 class="text-center">Todav&iacute;a No has a&ntilde;adido ning&uacute;n Producto al Carrito</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- PANEL DE CONTENIDO -->
+		<div class="row" th:unless="${#lists.isEmpty(mis_compras)}">
+			<div class="col-md-offset-3 col-md-6">
+				<div class="panel panel-default">
+					<div class="panel-heading" style="background: #69b72a;color: white;">
+						<span class="panel-title" style="font-size: 18px;">Listado de Facturas</span>
+					</div>
+					<div class="panel-body invoice-body">
+						<div class="table-responsive">
+							<table class="table table-striped">
+								<thead>
+									<tr style="font-size: 16px;">
+										<td><strong>ID</strong></td>
+										<td><strong>Fecha de Emisi&oacute;n</strong></td>
+										<td></td>
+										<td></td>
+									</tr>
+								</thead>
+								<tbody>
+								<!-- Para cada compra -->
+									<tr th:each="compra : ${mis_compras}" style="font-size: 16px;">
+										<td style="vertical-align: middle;"><span th:text="${compra.id}">1</span></td>
+										
+										<td style="vertical-align: middle;"><span th:text="${#dates.format(compra.fechaCompra,'dd/MMM/yyyy &nbsp;HH:mm')}" style="vertical-align: middle;">10/10/2018 10:10</span></td>
+										<!-- Muestro la factura en HTML -->
+										<td><a th:href="@{/app/miscompras/factura/{id}(id=${compra.id})}" class="btn btn-info pull-right">
+											<span class="glyphicon glyphicon-search"></span> &nbsp;&nbsp;Ver Factura</a></td>
+										<!-- Muestro la factura en PDF con mi servicio de facturas-->
+										<td><a th:href="@{/app/miscompras/pdf/factura/{id}(id=${compra.id})}" class="btn btn-default pull-right" style="margin-left: -50px;">
+											<span class="glyphicon glyphicon-download-alt"></span> &nbsp;&nbsp;Descargar Factura en PDF</a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br>
+	<br>
+	<!-- Footer -->
+	<footer th:insert="fragments/footer :: footer" class="navbar-inverse navbar-fixed-bottom"></footer>
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

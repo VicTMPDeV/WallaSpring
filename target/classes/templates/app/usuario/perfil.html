@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!-- NameSpace de Thymeleaf como Motor de Plantillas y Thymeleaf Extras para usar Spring Security en la Vista  -->
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!-- HEAD (Fragment head.html)-->
+<head th:insert="fragments/head :: head" />
+<body>
+	<!-- BARRA SUPERIOR DE NAVEGACION (Fragment navbar.html)-->
+	<div class="navbar">
+		<nav th:replace="fragments/navbar :: navbar" />
+	</div>
+	<!-- CUERPO PRINCIPAL DE LA PAGINA -->
+	<!-- LOGO (Fragment logo.html)-->
+	<div class="logo">
+		<div th:replace="fragments/logo.html :: logo" />
+	</div>
+	<!-- PANEL DE misdatos -->
+	<div class="col-md-offset-3 col-md-6">
+		<div class="panel panel-default panel-usuario" style="margin-bottom: 30px">
+			<!-- AVATAR misdatos -->
+			<div class="panel-body text-center">
+				<!-- EDITAR USUARIO -->	
+				<a class="edit pull-right" th:href="@{/app/miperfil/editar/{id} (id=${misdatos.id})}">
+					<span class="btn btn-warning" >Editar Cuenta</span> 
+				</a>
+				<br>
+				<!-- CONDICIONAL TERNARIO: Si el Atributo Avatar esta Vacio, usamos el Servicio para Avatares de la URL (adorable.io), SI NO, es porque tenemos asignada una URL local (hemos subido nosotros una imagen en el Formulario) y accederemos a ella -->
+				<img class="img-circle col-md-offset-4 col-md-4" name="aboutme" width="180" height="180" alt="Avatar de misdatos"
+					th:src="${#strings.isEmpty(misdatos.avatar)} ? @{http://api.adorable.io/avatars/140/{email}.png(email=${misdatos.email})} : ${misdatos.avatar}" />
+				
+			</div>
+			<br>
+			<!-- NOMBRE misdatos VENDEDOR DEL PRODUCTO -->
+			<div class="panel-heading" style="background-color: #69b72a; color: white"><b>Usuario :</b>
+				<div class="nombre pull-right">
+					<span th:text="${misdatos.nombre + ' ' + misdatos.apellidos}"></span>
+				</div>
+			</div>
+			<!-- VENTAS ACUMULADAS -->
+			<div class="panel-heading" style="color: #69b72a"><b>Ventas :</b>
+				<div class="email pull-right" >
+					+ <span th:text="${#numbers.formatCurrency(misventas)}"></span>
+				</div>
+			</div>
+			<!-- COMPRAS ACUMULADAS -->
+			<div class="panel-heading" style="color: red"><b>Compras :</b>
+				<div class="email pull-right" >
+					- <span th:text="${#numbers.formatCurrency(miscompras)}"></span>
+				</div>
+			</div>
+			<!-- BALANCE -->
+			<div class="panel-heading" style="color: #69b72a"><b>BALANCE :</b>
+				<div class="email pull-right" th:with="result=${misventas}-${miscompras}">
+					<div th:if="${result >= 0}">
+						+ <span th:text="${#numbers.formatCurrency(result)}"  style="color: #69b72a"></span>
+					</div>
+					<div th:if="${result < 0}">
+						- <span th:text="${#numbers.formatCurrency(result)}"  style="color: red"></span>
+					</div>
+				</div>
+			</div>
+		</div> 
+	</div> 
+<br><br><br>
+<!-- PIE DE PAGINA (Fragment footer.html)-->
+<footer th:insert="fragments/footer :: footer" class="navbar-inverse navbar-fixed-bottom"></footer>
+<!-- SCRIPTS al final para que carguen los ultimos y la pagina de sensacion de fluidez -->
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

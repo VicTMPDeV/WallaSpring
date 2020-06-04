@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<!-- NameSpace de Thymeleaf como Motor de Plantillas y Thymeleaf Extras para usar Spring Security en la Vista  -->
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!-- HEAD (Ver Fragment)-->
+
+<head th:replace="fragments/head :: head" />
+
+<body>
+	<!-- BARRA SUPERIOR DE NAVEGACION (Ver Fragment)-->
+	<div class="navbar">
+		<nav th:replace="fragments/navbar :: navbar" />
+	</div>
+	<!-- CUERPO PRINCIPAL DE LA PAGINA -->
+	<!-- LOGO (Fragment logo.html)-->
+	<div class="logo">
+		<div th:replace="fragments/logo.html :: logo" />
+	</div>
+	<!-- FORMULARIO DE RESGISTRO -->
+	<div class="container">
+		<div id="signupbox" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+			<div class="panel panel-default">
+				<div class="panel-heading" style="color: #69b72a">
+					<div class="panel-title text-center">FORMULARIO DE REGISTRO</div>
+				</div>
+				<div class="panel-body">
+					<!-- CAMPOS FORMULARIO Y ACCION POST -->
+					<form id="signupform" class="form-horizontal" role="form" method="POST"
+						enctype="multipart/form-data" th:action="@{/auth/register}" th:object="${usuario}">
+						<!-- CONTENEDOR PARA MOSTRAR ERRORES DE REGISTRO -->
+						<div id="signupalert" style="display: none" class="alert alert-danger">
+							<p>Error:</p>
+							<span></span>
+						</div>
+						<!-- CAMPO Email-->
+						<div class="form-group" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
+							<label for="email" class="col-md-2 control-label">Email</label>
+							<div class="col-md-9">
+								<input type="email" name="email" class="form-control" placeholder="Introduce tu e-mail" 
+								pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,5}"
+								title="Ejemplo: alguien@dominio.com"
+								th:field="*{email}" required/>
+								<!-- SI HAY ERRORES, ANYADIMOS UN MENSAJE DE TEXTO CON EL MENSAJE DE ERROR CORRESPONDIENTE -->
+								<span id="email-error" class="help-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">ERRORES</span>
+							</div>
+						</div>
+						<!-- CAMPO Nombre -->
+						<div class="form-group">
+							<label for="nombre" class="col-md-2 control-label">Nombre</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" name="nombre" placeholder="Introduce tu Nombre"
+								pattern="[a-zA-Z]{3,48}"
+								title="Nombre Incorrecto: Tama&ntilde;o Insuficiente o Caracteres No Validos"
+								th:field="*{nombre}" required />
+							</div>
+						</div>
+						<!-- CAMPO Apellidos -->
+						<div class="form-group">
+							<label for="apellidos" class="col-md-2 control-label">Apellidos</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" name="apellidos" placeholder="Introduce tus Apellidos" 
+								pattern="[a-zA-Z]{3,48}\s[a-zA-Z]{3,48}"
+								title="Apellidos Incorrectos: Indique 2 Apellidos. Tama&ntilde;o Insuficiente o Caracteres No Validos"
+								th:field="*{apellidos}" required />
+							</div>
+						</div>
+						<!-- CAMPO Password -->
+						<div class="form-group">
+							<label for="password" class="col-md-2 control-label">Password</label>
+							<div class="col-md-9">
+								<input type="password" class="form-control" name="passwd" placeholder="Escoge una Contrase&ntilde;a" 
+								pattern="[A-Za-z0-9]{8,20}"
+								title="Tama&ntilde;o entre 8 y 20 caracteres (Solo numeros y letras)"
+								th:field="*{password}" required />
+							</div>
+						</div>
+						<!-- CAMPO Avatar -->
+						<div class="form-group">
+							<label for="filebutton" class="col-md-2 control-label">Avatar</label>
+							<div class="col-md-9">
+								<input id="filebutton" name="file" class="form-control input-file" type="file"/>							
+								<p style="color: grey;">* El tama&ntilde;o del archivo no puede ser superior a 5 Mb</p>
+							</div>
+						</div>
+						<!-- BOTON SUBMIT -->
+						<div class="form-group">					
+							<div class="control col-md-12">
+								<div class="botones " style="border-top: 1px solid #888; padding-top: 30px; text-align: center;">
+									<button id="btn-signup" type="submit" class="btn btn-info" style="width: 150px;">Continuar</button>
+									<span style="margin-left: 10px;">... o Volver al </span> 
+									<a th:href="@{/auth/login}"><b>Formulario de Login</b></a>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br>
+	<br>
+	<!-- PIE DE PAGINA (Fragment footer.html)-->
+	<div class="footer">
+		<footer th:insert="fragments/footer :: footer" class="navbar-inverse navbar-fixed-bottom"></footer>
+	</div>
+	<!-- SCRIPTS -->
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

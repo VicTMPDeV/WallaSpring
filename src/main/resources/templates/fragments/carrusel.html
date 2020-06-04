@@ -1,0 +1,50 @@
+<!-- Fragment de Carrusel que se vera en tiempo de ejecucion -->
+<div th:fragment="carrusel" class="container" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <div id="caraousel-items" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <!-- BOLITAS INDICADORES POSICION DEL CARRUSEL -->
+                    <li data-target="#caraousel-items" data-slide-to="0" class="active"></li>
+                    <li data-target="#caraousel-items" data-slide-to="1"></li>
+                    <li data-target="#caraousel-items" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="item active col text-center">
+                        <img th:src="@{/images/slider01.jpg}" alt="First slide">
+                        <div class="carousel-caption">
+                            <h3 style="color: #5bc400;"><b>Tu Tienda de Compra-Venta Online</b></h3>
+                        </div>
+                    </div>
+                    <div class="item col text-center">
+                        <img th:src="@{/images/slider02.jpg}" alt="Second slide">
+                        <div class="carousel-caption">
+                            <h3 style="color: #5bc400;"><b>Vende lo que NO Necesites, Compra Todo lo que Quieras</b></h3>
+                        </div>
+                    </div>
+                    <div class="item col text-center">
+                        <img th:src="@{/images/slider03.jpg}" alt="Third slide">
+                        <div class="carousel-caption">
+                            <h3 style="color: #5bc400;"><b>¡ Entra Ya y Encuentra Todo lo que Buscas !</b></h3>
+                            <div class="botones">
+                                <a class="btn btn-success btn-sm btn-min-block" th:href="@{/auth/login}" style="margin: 5px;">ENTRAR</a>
+                                <a class="btn btn-success btn-sm btn-min-block" th:href="@{/auth/login}" style="margin: 5px;">REGISTRARSE</a>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-buttons">
+                    <!-- BOTON DESPLAZAR CARRUSEL IZQUIERDA -->
+                    <a class="left carousel-control" href="#caraousel-items" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <!-- BOTON DESPLAZAR CARRUSEL DERECHA -->
+                    <a class="right carousel-control" href="#caraousel-items" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

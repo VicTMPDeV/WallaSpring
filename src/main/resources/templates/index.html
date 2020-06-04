@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<!-- NameSpace de Thymeleaf como Motor de Plantillas y Thymeleaf Extras para usar Spring Security en la Vista  -->
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!-- HEAD (Fragment head.html)-->
+<head th:replace="fragments/head :: head" />
+
+<body>
+	<!-- BARRA SUPERIOR DE NAVEGACION (Fragment navbar.html)-->
+	<div class="navbar">
+		<nav th:replace="fragments/navbar :: navbar" />
+	</div>
+	<!-- CUERPO PRINCIPAL DE LA PAGINA -->
+	<!-- LOGO (Fragment logo.html)-->
+	<div class="logo">
+		<div th:replace="fragments/logo.html :: logo" />
+	</div>
+	<!-- CARRUSEL (Fragment carrusel.html)-->
+	<div class="carrusel" sec:authorize="isAnonymous()">
+		<div th:replace="fragments/carrusel :: carrusel" />
+	</div>
+	<!-- MUESTRA LOS PRODUCTOS -->
+	<div class="destacados">
+		<h2><b>PRODUCTOS&nbsp;&nbsp;DESTACADOS</b></h2>
+	</div>
+	<!-- PANEL DE PRODUCTOS - PUBLIC -->
+	<div class="container" sec:authorize="isAnonymous()">
+		<div class="row">
+			<div class="row" th:if="${#lists.isEmpty(productos)}">
+				<div class="col-md-offset-1 col-md-10">
+					<div class="jumbotron" style="background: white;margin-bottom: 50px;margin-top: 40px;">
+						<div class="container" style="padding-bottom: 1%;">
+							<h2 class="text-center" style="color: red;">Se han Agotado Todos los Productos de la Plataforma</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Recorremos todos los productos: Foreach -->
+			<div class="col-lg-4" th:each="producto : ${productos}" >
+				<!-- PANEL QUE CONTIENE CADA PRODUCTO -->
+				<div class="panel panel-default panel-producto" style="margin-bottom: 30px">
+					<!-- Enlace a la pagina de descripcion del producto -->
+					<a th:href="@{/auth/login}" style="display: none"></a>
+					<div class="panel-heading" style="background-color: #69b72a; color: white">
+						<!-- Nombre Producto -->
+						<span th:text="${producto.nombre}">NOMBRE DEL PRODUCTO</span>
+					</div>
+					<div class="panel-body">
+						<!-- Imagen Producto -->
+						<img class="img-responsive center-block" alt="Image" style="height: 300px;"
+							th:src="${#strings.isEmpty(producto.imagen)} ? 'http://placehold.it/350x260' : ${producto.imagen}">
+					</div>
+					<div class="panel-footer" style="color: #69b72a">
+						<div class="row">
+							<div class="precio col-md-6">
+								<!-- Precio Formateado por Pais -->
+								<span class="precio" th:text="${#numbers.formatCurrency(producto.precio)}"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div> <!-- Fin del Foreach de cada producto -->
+		</div>
+	</div>
+	<!-- PANEL DE PRODUCTOS - USUARIO LOGUEADO -->
+	<div class="container" sec:authorize="isAuthenticated()">
+		<div class="row">
+			<div class="row" th:if="${#lists.isEmpty(productos)}">
+				<div class="col-md-offset-1 col-md-10">
+					<div class="jumbotron" style="background: white;margin-bottom: 50px;margin-top: 40px;">
+						<div class="container" style="padding-bottom: 1%;">
+							<h2 class="text-center" style="color: red;">Se han Agotado Todos los Productos de la Plataforma</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Recorremos todos los productos: Foreach -->
+			<div class="col-lg-4" th:if="${#authentication.name != producto.propietario.email}" th:each="producto : ${productos}" >
+				<!-- PANEL QUE CONTIENE CADA PRODUCTO -->
+				<div class="panel panel-default panel-producto" style="margin-bottom: 30px">
+					<!-- Enlace a la pagina de descripcion del producto -->
+					<a th:href="@{/public/producto/{id}(id=${producto.id})}" style="display: none"></a>
+					<div class="panel-heading" style="background-color: #69b72a; color: white">
+						<!-- Nombre Producto -->
+						<span th:text="${producto.nombre}">NOMBRE DEL PRODUCTO</span>
+					</div>
+					<div class="panel-body">
+						<!-- Imagen Producto -->
+						<img class="img-responsive center-block" alt="Image" style="height: 300px;"
+							th:src="${#strings.isEmpty(producto.imagen)} ? 'http://placehold.it/350x260' : ${producto.imagen}">
+					</div>
+					<div class="panel-footer" style="color: #69b72a">
+						<div class="row">
+							<div class="precio col-md-6">
+								<!-- Precio Formateado por Pais -->
+								<span class="precio" th:text="${#numbers.formatCurrency(producto.precio)}"></span>
+							</div>
+							<!-- Si esta autenticado y su nombre de utenticacion es distinto al email del propietario
+							del producto, entonces los anyadimos, es decir, el producto no me pertenece -->
+							<div class="col-md-6">
+								<a th:href="@{/app/carrito/add/{id}(id=${producto.id})}" class="pull-right btn btn-success btn-product">
+									<span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;&nbsp;&nbsp;COMPRAR</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div> <!-- Fin del Foreach de cada producto -->
+		</div>
+	</div>
+	<br>
+	<br>
+	
+	<!-- PIE DE PAGINA (Fragment footer.html)-->
+	<div class="footer">
+		<footer th:insert="fragments/footer :: footer" class="navbar-inverse navbar-fixed-bottom"></footer>
+	</div>
+	<!-- SCRIPTS al final para que carguen los ultimos y la pagina de sensacion de fluidez -->
+	<script	th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('.panel-producto')
+				.children()
+				.not(".footer")
+				.click(function () {
+					window.location = $(this).parent().find("a").attr("href");
+					return false;
+				});
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<!-- NameSpace de Thymeleaf como Motor de Plantillas y Thymeleaf Extras para usar Spring Security en la Vista  -->
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!-- HEAD (Fragment head.html)-->
+<head th:insert="fragments/head :: head" />
+
+<body>
+	<!-- BARRA SUPERIOR DE NAVEGACION (Fragment navbar.html)-->
+	<div class="navbar">
+		<nav th:replace="fragments/navbar :: navbar" />
+	</div>
+	<!-- CUERPO PRINCIPAL DE LA PAGINA -->
+	<!-- LOGO (Fragment logo.html)-->
+	<div class="logo">
+		<div th:replace="fragments/logo.html :: logo" />
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-offset-3 col-md-6" >
+				<div class="panel panel-default">
+					<div class="panel-heading" style="background: #69b72a;color: white;">
+						<span class="panel-title" style="font-size: 25px;">FACTURA</span>
+						<span class="panel-subtitle pull-right" style="font-size: 16px; margin-top: 7px;">
+							ID Compra:&nbsp;<span th:text="${compra.id}">1234</span>
+						</span>
+					</div>
+					<div class="panel-body invoice-body">
+						<div class="table-datos">
+							<table >
+								<tr>
+									<td>
+										<strong>Comprador: </strong>
+										<span th:text="${compra.propietario.nombre + ' ' + compra.propietario.apellidos}"></span>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<strong>Fecha de la Compra: </strong>
+										<span th:text="${#dates.format(compra.fechaCompra,' dd / MMM / yyyy ')}">10/10/2018</span>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<strong>Hora de la Compra: </strong>
+										<span th:text="${#dates.format(compra.fechaCompra,'HH:mm')}">10:10</span>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- DATOS DEL PRODUCTO -->
+		<div class="row">
+			<div class="col-md-offset-3 col-md-6">
+				<div class="panel panel-default">
+					<div class="panel-heading" style="background: #69b72a;color: white;">
+						<span class="panel-title" style="font-size: 18px;">Listado de Productos</span>
+					</div>
+					<div class="panel-body invoice-body">
+						<div class="table-responsive">
+							<table class="table table-condensed">
+								<thead>
+									<tr>
+										<td><strong>Producto</strong></td>
+										<td class="text-right"><strong>Precio</strong></td>
+									</tr>
+								</thead>
+								<tbody>									
+									<tr th:each="producto : ${productos}">
+										<td><span th:text="${producto.nombre}">Producto</span></td>
+										<td class="text-right"><span th:text="${#numbers.formatCurrency(producto.precio)}">123€</span></td>
+									</tr>
+									<tr>
+										<td class="thick-line text-right"><strong>Total:</strong></td>
+										<td class="thick-line text-right"><span th:text="${#numbers.formatCurrency(total_compra)}">123€</span></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- DATOS DEL VENDEDOR -->
+		<div class="row">
+			<div class="col-md-offset-3 col-md-6">
+				<div class="panel panel-default">
+					<div class="panel-heading" style="background: #69b72a;color: white;">
+						<span class="panel-title" style="font-size: 18px;">Datos del Vendedor</span>
+					</div>
+					<div class="panel-body invoice-body">
+						<div class="table-responsive">
+							<table class="table table-condensed">
+								<thead>
+									<tr>
+										<td class="text-left"><strong>Producto</strong></td>
+										<td class="text-center pull-left"><strong>Nombre</strong></td>
+										<td class="text-right"><strong>Email</strong></td>
+									</tr>
+								</thead>
+								<tbody>									
+									<tr th:each="producto : ${productos}">
+										<td><span th:text="${producto.nombre}">Producto</span></td>
+										<td><span class="text-center pull-center" th:text="${producto.propietario.nombre + ' ' + producto.propietario.apellidos}">Nombre</span></td>
+										<td><span class="text-center pull-right" th:text="${producto.propietario.email}">Email</span></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br><br><br>
+<!-- Footer -->
+<footer th:insert="fragments/footer :: footer" class="navbar-inverse navbar-fixed-bottom"></footer>
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+		th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+		th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+
+
+
+</body>
+</html>

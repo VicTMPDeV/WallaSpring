@@ -1,0 +1,92 @@
+@charset "UTF-8";
+
+.navbar {
+    background: black;
+    border-color: black;
+    color: white;
+    margin: 0%;
+}
+
+.logo {
+    margin: 1%;
+}
+
+.carrusel {
+    margin: 0%;
+}
+
+.destacados {
+    background-color: #69b72a;
+    color: white;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding-top: 5px;
+    padding-bottom: 12px;
+    text-align: center;
+}
+
+@media (min-width: 1200px) {
+    .container {
+        width: 90%;
+        max-width: 90%;
+    }
+}
+
+.panel-heading {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.precio {
+    font-size: 18px;
+    font-weight: bold;
+    padding-top: 5px;
+}
+
+.panel-producto {
+    cursor: pointer;
+}
+
+
+/* ESTILOS PARA LA FACTURA EN PDF */
+.invoice-title h2,
+.invoice-title h3 {
+    display: inline-block;
+}
+
+.invoice-body .table>tbody>tr>.no-line {
+    border-top: none;
+}
+
+.invoice-body .table>thead>tr>.no-line {
+    border-bottom: none;
+}
+
+.invoice-body .table>tbody>tr>.thick-line {
+    border-top: 2px solid;
+}
+
+/** Slider **/
+.main-text {
+    position: absolute;
+    top: 50px;
+    width: 95%;
+    color: #FFF;
+}
+
+.btn-min-block {
+    min-width: 170px;
+    line-height: 26px;
+}
+
+.btn-clear {
+    color: #FFF;
+    background-color: transparent;
+    border-color: #FFF;
+    margin-right: 15px;
+}
+
+.btn-clear:hover {
+    color: #000;
+    background-color: #FFF;
+}

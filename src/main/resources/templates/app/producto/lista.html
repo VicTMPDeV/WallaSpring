@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<!-- NameSpace de Thymeleaf como Motor de Plantillas y Thymeleaf Extras para usar Spring Security en la Vista  -->
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!-- HEAD (Fragment head.html)-->
+
+<head th:insert="fragments/head :: head" />
+
+<body>
+	<!-- BARRA SUPERIOR DE NAVEGACION (Fragment navbar.html)-->
+	<div class="navbar">
+		<nav th:replace="fragments/navbar :: navbar" />
+	</div>
+	<!-- CUERPO PRINCIPAL DE LA PAGINA -->
+	<!-- LOGO (Fragment logo.html)-->
+	<div class="logo">
+		<div th:replace="fragments/logo.html :: logo" />
+	</div>
+	<!-- PANEL DE PRODUCTOS EN VENTA -->
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12" style="margin-bottom: 10px;">
+				<div class="panel panel-default">
+					<div class="panel-heading text-center" style="background: #69b72a;color: white;">
+						<span class="panel-title" style="font-size: 25px;">Mis Productos en Venta</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row" th:if="${#lists.isEmpty(misproductos)}">
+		<div class="col-md-offset-1 col-md-10">
+				<div class="jumbotron" style="background: white;margin-bottom: 50px;margin-top: 40px;">
+					<div class="container" style="padding-bottom: 1%;">
+						<h2 class="text-center" style="color: red;">Todav&iacute;a No has subido ning&uacute;n Producto a la Plataforma</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row" th:unless="${#lists.isEmpty(misproductos)}">
+			<!-- Recorremos todos los productos: Foreach -->
+			<div class="col-lg-4" th:each="producto : ${misproductos}">
+				<!-- PANEL QUE CONTIENE CADA PRODUCTO -->
+				<div class="panel panel-default panel-producto" style="margin-bottom: 30px;">
+					<div class="panel-heading" style="background-color: #69b72a; color: white">
+						<!-- Nombre Producto -->
+						<span th:text="${producto.nombre}">NOMBRE DEL PRODUCTO</span>
+						<!-- Estado del Producto -->
+						<span class="label label-danger pull-right" style="margin-top: 2px; padding: 1%"
+							th:if="${producto.compra != null}">&nbsp;VENDIDO&nbsp;</span>
+						<span class="label label-info pull-right" style="margin-top: 2px; padding: 1%"
+							th:unless="${producto.compra != null}">&nbsp;DISPONIBLE&nbsp;</span>
+					</div>
+					<div class="panel-body">
+						<!-- Imagen Producto -->
+						<img class="img-responsive center-block" alt="Image" style="height: 300px;" th:src="${#strings.isEmpty(producto.imagen)} ? 'http://placehold.it/350x260' : ${producto.imagen}">
+					</div>
+					<div class="panel-footer" style="color: #69b72a">
+						<div class="row">
+							<div class="col-md-4 precio">
+								<!-- Precio Formateado por Pais -->
+								<span class="precio" th:text="${#numbers.formatCurrency(producto.precio)}"></span>
+							</div>
+							<div class="col-md-8">
+								<div class="pull-right">
+									<!-- EDITAR Producto -->
+									<a class="edit" th:href="@{/app/misproductos/editar/{id} (id=${producto.id})}">
+										<span class="btn btn-warning" th:if="${producto.compra == null}">Editar</span>
+									</a>
+									&nbsp;
+									<!-- BORRAR Producto -->
+									<a class="borrar" th:if="${producto.compra == null}" th:data-id="${producto.id}" 
+										data-toggle="modal" data-target="#delete-modal" aria-label="close">
+										<span class="btn btn-danger">Borrar</span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row text-center">
+			<!-- BOTON ANYADIR NUEVO PRODUCTO-->
+			<div class="col-xs-12 col-md-12" style="margin-top: 10px;">
+				<a th:href="@{/app/misproductos/nuevo}" class="btn btn-lg btn-success">A&ntilde;adir Nuevo Producto</a>
+			</div>
+		</div>
+	</div>
+	<br>
+	<br>
+	<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title text-center">¿Seguro que quieres BORRAR este Producto?</h4>
+				</div>
+				<div class="modal-body text-center">
+					<button type="button" class="btn btn-default" data-dismiss="modal" style="width: 75px">NO</button>
+					&nbsp;&nbsp;
+					<a href="#" class="btn btn-danger" style="width: 75px">SI</a>
+				</div>
+			</div>
+		</div>
+	</div>
+<br><br><br>
+<!-- PIE DE PAGINA (Fragment footer.html)-->
+<footer th:insert="fragments/footer :: footer" class="navbar-inverse navbar-fixed-bottom"></footer>
+<!-- SCRIPTS al final para que carguen los ultimos y la pagina de sensacion de fluidez -->
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('#delete-modal').on('show.bs.modal', function (event) {
+				var button = $(event.relatedTarget);
+				var data = button.data('id');
+				var modal = $(this);
+				var a = modal.find('.modal-body a')[0];
+				a.href = '/app/misproductos/' + data + '/eliminar';
+			});
+		});
+	</script>
+</body>
+</html>

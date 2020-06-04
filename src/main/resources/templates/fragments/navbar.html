@@ -1,0 +1,68 @@
+<!-- Fragment de NAVBAR -->
+<nav th:fragment="navbar" class="navbar navbar-inverse navbar-fixed-top" xmlns:th="http://www.w3.org/1999/xhtml">
+    <!-- Contenedor Responsive que se adaptara a todos los tamanyos de pantalla de dispositivos -->
+    <div class="container-fluid">
+        <!-- Contenido minimo a mostrar en NavBar (Esto es, cuando la pantalla es muy pequenya) -->
+        <div class="navbar-header">
+            <!-- Pulsando el LOGO nos lleva a la Pagina de Index -->
+            <a th:href="@{/}"><img class="navbar-brand" th:src="@{/images/logo.png}" /></a>
+            <!-- Boton que aparece al reducir la pantalla para mostrar el NavBar -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar"/>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <!-- Contenido ajustado a la Izquierda del navbar -->
+            <ul class="nav navbar-nav navbar-left">
+                <!-- Solo si esta autorizado/autenticado mostramos los elementos -->
+                <li>
+                    <a th:href="@{/}">Inicio</a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/app/miperfil}">Mi Perfil</a><!--CAMBIAR RUTA-->
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/app/misproductos}">Mis Productos</a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/app/miscompras}">Mis Compras</a>
+                </li>
+            </ul>
+            <!-- Contenido ajustado a la Derecha del navbar -->
+            <ul class="nav navbar-nav navbar-right">
+                <!-- Si el Usuario NO esta Autenticado, le mostramos el Boton de Login -->
+                <li sec:authorize="!isAuthenticated()"> <!-- TAMBIEN SE PUEDE USAR isAnonymous() -->
+                    <a th:href="@{/auth/login}"><span class="glyphicon glyphicon-user"></span> Login</a>
+                </li>
+                <!-- Si el Usuario SI esta Autenticado mostramos el Carrito -->
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/app/carrito}">
+                        <!-- Items del crrito. Ver Controlador Compra para entenderlo -->
+                        <font th:text="${session.items_carrito}" th:unless="${session == null}" color="darksalmon"></font>
+                        <span class="glyphicon glyphicon-shopping-cart"></span> &nbsp;Carrito
+                    </a>
+                </li>
+                <!-- Si el Usuario SI esta Autenticado, le mostramos su UserName de la Sesion (Email) -->
+                <li sec:authorize="isAuthenticated()" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <!-- Hacemos uso de los Extras de Thymeleaf para sacar el nombre de Usuario de la Sesion -->
+                        <span th:text="${#authentication.name}">Usuario</span> 
+                        <span class="caret"></span>
+                    </a>
+                    <!-- Boton de Logout (Salir) que Cierra la Sesion y devuelve a pantalla principal -->
+                    <ul class="dropdown-menu">
+                        <li>
+                            <!-- Haciendo uso de JQuery hacemos Logout -->
+                            <a href="javascript:document.getElementById('logoutForm').submit()">Salir</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- Formulario de buscar -->
+            <form class="navbar-form navbar-right">
+                <span class="glyphicon glyphicon-search" style="color:grey; vertical-align: middle;"></span>&nbsp;&nbsp;
+                <input type="text" class="form-control" placeholder="Buscar..." name="q" th:value="${param.q}">
+            </form>
+        </div>
+    </div>
+    <!-- Formulario de LOGOUT - Gestionado por Spring Security -->
+    <form th:action="@{/auth/logout}" method="POST" id="logoutForm"></form>
+</nav>

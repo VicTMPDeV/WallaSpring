@@ -1,0 +1,18 @@
+<!-- Fragment de HEAD comun a todas las plantillas -->
+<head th:fragment="head" lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+    <title>WallaSpring</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" th:href="@{/images/logo2.png}"/>
+    <!-- Estilos cargados desde el webjars y static styles-->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+
+    <!-- Para cambiar el fondo -->
+    <style th:inline="text">
+        body{
+            background: url([[@{/images/fondo.jpg}]])
+            no-repeat center center fixed;
+        }
+    </style>
+</head>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!-- NameSpace de Thymeleaf como Motor de Plantillas y Thymeleaf Extras para usar Spring Security en la Vista  -->
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!-- HEAD (Ver Fragment)-->
+
+<head th:insert="fragments/head :: head" />
+
+<body>
+	<!-- BARRA SUPERIOR DE NAVEGACION (Ver Fragment)-->
+	<div class="navbar">
+		<nav th:replace="fragments/navbar :: navbar" />
+	</div>
+	<!-- CUERPO PRINCIPAL DE LA PAGINA -->
+	<!-- LOGO (Fragment logo.html)-->
+	<div class="logo">
+		<div th:replace="fragments/logo.html :: logo" />
+	</div>
+	<div class="container">
+		<div class="row">
+			<!-- PANEL DEL USUARIO VENDEDOR (userPanel.html) -->
+			<div class="col-md-6">
+				<div class="userPanel">
+					<div th:replace="fragments/userPanel.html :: userPanel" />
+				</div>
+			</div>
+			<!-- PANEL DEL PRODUCTO (productPanel.html) -->
+			<div class=" col-md-6">
+				<div class="productPanel">
+					<div th:replace="fragments/productPanel.html :: productPanel" />
+				</div>
+			</div>
+		</div>
+	</div>
+	<br>
+	<br>
+	<!-- PIE DE PAGINA (Fragment footer.html)-->
+	<div class="footer">
+		<footer th:insert="fragments/footer :: footer" class="navbar-inverse navbar-fixed-bottom"></footer>
+	</div>
+	<!-- SCRIPTS al final para que carguen los ultimos y la pagina de sensacion de fluidez -->
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+
+</html>

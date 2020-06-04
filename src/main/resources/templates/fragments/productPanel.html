@@ -1,0 +1,30 @@
+<!-- Fragment de PANEL DE PRODUCTO que se vera en tiempo de ejecucion -->
+<div th:fragment="productPanel" class="container" xmlns:th="http://www.w3.org/1999/xhtml">
+	<div class="col-md-12">
+		<div class="panel panel-default panel-producto" style="margin-bottom: 30px">
+			<div class="panel-heading" style="background-color: #69b72a; color: white">
+				<!-- NOMBRE PRODUCTO -->
+				<span th:text="${producto.nombre}">NOMBRE DEL PRODUCTO</span>
+			</div>
+			<div class="panel-body">
+				<!-- IMAGEN PRODUCTO -->
+				<img class="img-responsive center-block" alt="Image" style="height: 300px"
+				     th:src="${#strings.isEmpty(producto.imagen)} ? 'http://placehold.it/350x260' : ${producto.imagen}"/>
+			</div>
+			<div class="panel-footer" style="color: #69b72a;">
+				<div class="row">
+					<div class="precio col-md-6">
+						<!-- Colocamos el percio formateado por pais -->
+						<span class="precio" th:text="${#numbers.formatCurrency(producto.precio)}"></span>
+					</div>
+					<!-- Si esta autenticado y su nombre de utenticacion es distinto al email del propietario del producto, entonces los anyadimos, es decir, el producto no me pertenece -->
+					<div class="col-md-6" sec:authorize="isAuthenticated()" th:if="${#authentication.name != producto.propietario.email}">
+						<a th:href="@{/app/carrito/add/{id}(id=${producto.id})}" class="pull-right btn btn-success btn-product">
+							<span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;&nbsp;&nbsp;COMPRAR
+						</a>
+					</div>
+				</div>
+			</div>
+		</div> 
+	</div> <!-- FIN DE CADA PANEL -->
+</div> <!-- FIN DEL FRAGMENT -->
