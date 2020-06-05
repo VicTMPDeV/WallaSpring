@@ -364,7 +364,7 @@ public class CompraController {
 	 * Metodo que atiende una Peticion GET en la ruta "/mis_compras". Nos muestra
 	 * los productos propiedad del Usuario que se encuentra autenticado (Una vez
 	 * han sido COMPRADOS).
-	 * El metodo redirige a la pagina "/app/compra/compra_list" donde se muestra la 
+	 * El metodo redirige a la pagina "app/compra/compra_list" donde se muestra la 
 	 * lista de productos propiedad del Usuario (Una vez COMPRADOS).
 	 * 
 	 * @param model
@@ -374,7 +374,7 @@ public class CompraController {
 	//MOSTRAR EL HISTORICO DE MIS COMPRAS
 	@GetMapping("/mis_compras")
 	public String verMisCompras(Model model) {
-		return "/app/compra/compra_list";
+		return "app/compra/compra_list";
 	}
 
 	/**
@@ -408,7 +408,7 @@ public class CompraController {
         model.addAttribute("productos", productosCarrito);
         model.addAttribute("compra", miCompra);
         model.addAttribute("total_compra", totalCompra);
-        return "/app/compra/factura";
+        return "app/compra/factura";
     }
 	
 	/**

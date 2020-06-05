@@ -29,17 +29,16 @@ public class Html2PdfServiceImpl implements Html2PdfService {
         Context context = new Context();
         context.setVariables(data);
         // Dirección de la plantilla
-        final String html = templateEngine.process("/app/pdf/facturapdf", context);
+        final String html = templateEngine.process("app/pdf/facturapdf", context);
         final String DEST = "target/factura.pdf";
 
         // Aquí convertimos el HTML que hemos renderizado en base a la plantilla y parametros en PDF
         // y lo devolvemos
         try {
-            HtmlConverter.convertToPdf(html, new FileOutputStream(DEST));
+            HtmlConverter.convertToPdf(html, new FileOutputStream(DEST)); //POR ESTO NO FUNCIONA EL GENERADOR DE PDF EN DESPLIEGUE
             return new InputStreamResource(new FileInputStream(DEST));
-
         } catch (IOException e) {
-           System.err.println(e.toString());
+        	System.err.println(e.toString());   
             return null;
         }
     }

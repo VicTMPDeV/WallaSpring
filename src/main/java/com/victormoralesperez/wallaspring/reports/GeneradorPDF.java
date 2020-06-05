@@ -56,10 +56,10 @@ public class GeneradorPDF {
                             BaseColor.BLACK)));             // color
 
             documento.close();
-
-
+            
         } catch (DocumentException ex) {
-
+        	System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+        	System.out.println(ex);
         }
 
         return new ByteArrayInputStream(out.toByteArray());
