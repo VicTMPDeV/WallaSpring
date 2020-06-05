@@ -292,12 +292,12 @@ public class ProductoController {
             // que no le hemos podido pasar al Formulario.
             productoEditado.setVendedor(p.getVendedor());
             // Si la imagen no se modifica, la reasignamos
-            productoEditado.setImagen(p.getImagen());
+            //productoEditado.setImagen(p.getImagen());
             // Si me han enviado el fichero con una imagen
             // sera porque la quieren Editar y cambiar
             if (!file.isEmpty()) {
                 // Borramos la antigua imagen en nuestro servicio de almacenamiento interno
-                storageService.delete(p.getImagen());
+                //storageService.delete(p.getImagen());
                 // Subimos la nueva al servicio de almacenamiento interno
                 String imagen = storageService.store(file);
                 productoEditado.setImagen(MvcUriComponentsBuilder.fromMethodName(FilesController.class, "serveFile", imagen).build().toUriString());

@@ -61,7 +61,7 @@ public class WallaSpringApplication {
     @Bean
     CommandLineRunner init(StorageService storageService) {
         return (args) -> {
-        	storageService.deleteAll();
+//        	storageService.deleteAll(); //BORRA TODO EL ALMACENAMIENTO EN LA CARPETA upload-dir (imagenes) ANTES DE EJECUTAR - COMENTAR CUANDO PASEMOS A PERSISTENCIA DE DATOS EN MySQL
             // Iniciamos el Servicio de Almacenamiento en el Directorio indicado en StorageProperties.
             storageService.init();
         };
@@ -91,39 +91,35 @@ public class WallaSpringApplication {
 	 * Al inicio no existe ninguna entidad Compra porque estas entidades se inicializan cuando 
 	 * ocurre la accion de FINALIZAR LA COMPRA, ya dentro de la Aplicación. (ver CompraController).
 	 * 
+	 * IMPORTANTE: Este metodo y su ejecucion, una vez queramos desplegar la Aplicacion, 
+	 * hay que DEJARLO COMENTADO porque los registros que genera en la Base de Datos 
+	 * de MySQL ya quedan persistidos.
+	 * 
 	 * @param usuarioServicio
 	 * @param productoServicio
 	 * @return
 	 */
 	
-	
-	//ESTO LO PODEMOS ELIMINAR ANTES DE LA PRODUCCION SI CONSEGUIMOS TENER LA BASE DE DATOS 
-	//EXTERNA AL PROGRAMA , EN MYSQL POR EJEMPLO, CON ESTOS DATOS YA PERSISTENTES EN ELLA.
-	
-	// LO QUE SI QUE HABRIA QUE HACER ES UNA LECTURA DE LA BASE DE DATOS AL INICIAR LA APLICACION
-	// PREGUNTAR AL ORACULO COMO SE HACE
-	
-	
-	@Bean
-	public CommandLineRunner initData(IUsuarioServicio usuarioServicio, IProductoServicio productoServicio) {
-		return args -> {
-			//CREAMOS DOS USUARIOS DE PRUEBA AL DESPLEGAR LA APLICACION
-			Usuario user1 = new Usuario("Víctor", "Morales Pérez", null, "victor.aparejador.1986@gmail.com", "mokete");
-			user1 = usuarioServicio.registrar(user1);
-			Usuario user2 = new Usuario("Maria Dolores", "Fernández Castillo", null, "lolifer85@gmail.com", "monete");
-			user2 = usuarioServicio.registrar(user2);
-			//CREAMOS UNA LISTA DE PRODUCTOS DE PRUEBA DISPONIBLES AL DESPLEGAR LA APLICACION
-			List<Producto> productList = Arrays.asList
-					(new Producto("Bicicleta de montaña", 100.0f,"https://sgfm.elcorteingles.es/SGFM/dctm/MEDIA03/201809/20/00108451997269____4__640x640.jpg", user1),
-					 new Producto("Golf GTI Serie 2", 2500.0f,"https://www.minicar.es/large/Volkswagen-Golf-GTi-G60-Serie-II-%281990%29-Norev-1%3A18-i22889.jpg",user1),
-					 new Producto("Xbox One X", 425.0f, "upload-dir/Xbox.jpg", user2),
-					 new Producto("Trípode flexible", 10.0f, "https://images.vibbo.com/635x476/860/86074256163.jpg",user2),
-					 new Producto("Iphone 7 128 GB", 350.0f,"https://store.storeimages.cdn-apple.com/4667/as-images.apple.com/is/image/AppleInc/aos/published/images/i/ph/iphone7/rosegold/iphone7-rosegold-select-2016?wid=470&hei=556&fmt=jpeg&qlt=95&op_usm=0.5,0.5&.v=1472430205982",user2));
-			//HACIENDO USO DEL SERVICIO, LOS AGREGAMOS A LA BASE DE DATOS USANDO JPA
-			for (Producto p : productList) {
-				productoServicio.insertar(p);
-			}
-		};
-	}
+//	@Bean
+//	public CommandLineRunner initData(IUsuarioServicio usuarioServicio, IProductoServicio productoServicio) {
+//		return args -> {
+//			//CREAMOS DOS USUARIOS DE PRUEBA AL DESPLEGAR LA APLICACION
+//			Usuario user1 = new Usuario("Víctor", "Morales Pérez", null, "victor.aparejador.1986@gmail.com", "mokete");
+//			user1 = usuarioServicio.registrar(user1);
+//			Usuario user2 = new Usuario("Maria Dolores", "Fernández Castillo", null, "lolifer85@gmail.com", "monete");
+//			user2 = usuarioServicio.registrar(user2);
+//			//CREAMOS UNA LISTA DE PRODUCTOS DE PRUEBA DISPONIBLES AL DESPLEGAR LA APLICACION
+//			List<Producto> productList = Arrays.asList
+//					(new Producto("Bicicleta de Montaña", 100.0f,null, user1),
+//					 new Producto("Golf GTI Serie 2", 2500.0f,null,user1),
+//					 new Producto("Xbox One X", 425.0f,null, user2),
+//					 new Producto("Cerveza Fresquita", 1.50f,null,user2),
+//					 new Producto("Pipi de Gato", 1.00f,null,user2));
+//			//HACIENDO USO DEL SERVICIO, LOS AGREGAMOS A LA BASE DE DATOS USANDO JPA
+//			for (Producto p : productList) {
+//				productoServicio.insertar(p);
+//			}
+//		};
+//	}
 	
 }
