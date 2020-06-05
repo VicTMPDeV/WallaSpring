@@ -1,0 +1,19 @@
+{
+  "groups": [
+    {
+      "name": "storage",
+      "type": "com.victormoralesperez.wallaspring.storageservice.StorageProperties",
+      "sourceType": "com.victormoralesperez.wallaspring.storageservice.StorageProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "storage.location",
+      "type": "java.lang.String",
+      "description": "ATRIBUTO --------------------------------------------------------------------------------------- Nombre del DIRECTORIO (\"upload-dir\") donde se Almacenaran los Archivos rebidios  del Multipart (imagenes de Productos y Avatares de Usuarios)",
+      "sourceType": "com.victormoralesperez.wallaspring.storageservice.StorageProperties",
+      "defaultValue": "upload-dir"
+    }
+  ],
+  "hints": []
+}

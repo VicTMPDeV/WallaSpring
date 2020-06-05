@@ -47,26 +47,7 @@ import com.victormoralesperez.wallaspring.storageservice.StorageService;
 @EnableConfigurationProperties(StorageProperties.class)
 @SpringBootApplication
 public class WallaSpringApplication {
-	
-	/**
-	 * ATRIBUTO
-	 * ---------------------------------------------------------------------------------------
-     * Este Bean se inicia al lanzar la aplicación. Nos permite 
-     * inicializar el almacenamiento secundario del proyecto
-     *
-     * @param storageService 
-     * @return
-     */
-	
-    @Bean
-    CommandLineRunner init(StorageService storageService) {
-        return (args) -> {
-        	// storageService.deleteAll(); //BORRA TODO EL ALMACENAMIENTO EN LA CARPETA upload-dir (imagenes) ANTES DE EJECUTAR - COMENTAR CUANDO PASEMOS A PERSISTENCIA DE DATOS EN MySQL
-            // Iniciamos el Servicio de Almacenamiento en el Directorio indicado en StorageProperties.
-            storageService.init();
-        };
-    }
-	
+
     /**
 	 * METODO MAIN - PUNTO DE ENTRADA A LA APLICACION WEB
 	 * ---------------------------------------------------------------------------------------
@@ -75,13 +56,12 @@ public class WallaSpringApplication {
 	 * prueba proporcionados por el Metodo CommandLineRunner initData() en este nuestro caso)
 	 * 
 	 */
+	
 	public static void main(String[] args) {
 		
 		SpringApplication.run(WallaSpringApplication.class, args);
 		
 	}
-	
-	
 	
 	/**
 	 * METODO DE CARGA DE DATOS DE INICIO EN LA APLICACION
@@ -121,5 +101,24 @@ public class WallaSpringApplication {
 //			}
 //		};
 //	}
+	
+	/**
+	 * ATRIBUTO
+	 * ---------------------------------------------------------------------------------------
+     * Este Bean se inicia al lanzar la aplicación. Nos permite 
+     * inicializar el almacenamiento secundario del proyecto
+     *
+     * @param storageService 
+     * @return
+     */
+	
+    @Bean
+    CommandLineRunner init(StorageService storageService) {
+        return (args) -> {
+//        	storageService.deleteAll(); //BORRA TODO EL ALMACENAMIENTO EN LA CARPETA upload-dir (imagenes) ANTES DE EJECUTAR - COMENTAR CUANDO PASEMOS A PERSISTENCIA DE DATOS EN MySQL
+            // Iniciamos el Servicio de Almacenamiento en el Directorio indicado en StorageProperties.
+            storageService.init();
+        };
+    }
 	
 }

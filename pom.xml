@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.victormoralesperez</groupId>
 	<artifactId>wallaspring</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>wallaspring</name>
 	<description>Proyecto de Fin de Ciclo Formativo de Grado Superior de Desarrollo de Aplicaciones Multiplataforma de Victor Morales Perez</description>
 
