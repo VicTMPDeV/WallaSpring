@@ -61,7 +61,7 @@ public class WallaSpringApplication {
     @Bean
     CommandLineRunner init(StorageService storageService) {
         return (args) -> {
-//        	storageService.deleteAll(); //BORRA TODO EL ALMACENAMIENTO EN LA CARPETA upload-dir (imagenes) ANTES DE EJECUTAR - COMENTAR CUANDO PASEMOS A PERSISTENCIA DE DATOS EN MySQL
+        	// storageService.deleteAll(); //BORRA TODO EL ALMACENAMIENTO EN LA CARPETA upload-dir (imagenes) ANTES DE EJECUTAR - COMENTAR CUANDO PASEMOS A PERSISTENCIA DE DATOS EN MySQL
             // Iniciamos el Servicio de Almacenamiento en el Directorio indicado en StorageProperties.
             storageService.init();
         };
