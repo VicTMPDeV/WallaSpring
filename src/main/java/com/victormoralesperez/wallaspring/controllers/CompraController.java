@@ -374,7 +374,7 @@ public class CompraController {
 	//MOSTRAR EL HISTORICO DE MIS COMPRAS
 	@GetMapping("/mis_compras")
 	public String verMisCompras(Model model) {
-		return "/app/compra/compra_list";
+		return "app/compra/compra_list";
 	}
 
 	/**
@@ -408,7 +408,7 @@ public class CompraController {
         model.addAttribute("productos", productosCarrito);
         model.addAttribute("compra", miCompra);
         model.addAttribute("total_compra", totalCompra);
-        return "/app/compra/factura";
+        return "app/compra/factura";
     }
 	
 	/**
